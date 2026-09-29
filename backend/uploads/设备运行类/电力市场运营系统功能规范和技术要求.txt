@@ -1,0 +1,2279 @@
+ICS27.100
+F20
+备案号:18572-2006
+DL
+中华人民共和国电力行业标准
+DL/T 1008——2006
+电力市场运营系统功能
+规范和技术要求
+Function Criterion and Technology Requirement of Electricity Market operation system
+2006-09-14发布 2007-03-01实施
+中华人民共和国国家发展和改革委员会	发	布
+公众号：规范标准库（免费下载）ID: guifan8899
+DL/T1008—2006
+目  次
+前言……………………………………………………………………………………………………………………………………………………………………………	Ⅱ
+1 范围⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯	1
+2 规范性引用文件………………………………………………………………………………………………………………………………	·1
+3 术语和定义………………………………………………………………………………………………………………………………………………………………	…·1
+4 总则………………………………………………………………………………………………………………………………………………………………………………………………………………………2
+5 总体要求……………………………………………………………………………………………………………………………………………………………………………………………………………2
+6 各子系统功能规范………………………………………………………………………………………………………………………………………………………………………………………3
+7 数据交换内容……………………………………………………………………………………………………………………………………………………………………………………12
+8 系统软硬件配置………………………………………………………………………………………………………………………………………………………………………………13
+9 数据交换模型……………………………………………………………………………………………………………………………………………………………………………………………15
+10 安全防护……………………………………………………………………………………………………………………………………………………………………………………………………15
+附录A（规范性附录）  数据交换模型……………………………………………………………………………………………………………………………………16
+附录B（资料性附录）  交易报价格式……………………………………………………………………………………………………………………………………22
+附录C（资料性附录）  符合交易报价格式的文件示例⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯46
+公众号：规范标准库（免费下载）ID: gui fan8899
+DL/T1008-2006
+前	言
+本标准是根据《国家发展和改革委办公厅关于下达2003年行业标准项目补充计划的通知》（发改办工业 [2003]873号）的安排制定的。
+为适应我国社会主义市场经济的发展和电力体制改革的需要，保证电力市场在公开、公平、公正的竞争环境下有序地运营，根据国家电力监管委员会发布的《电力市场技术支持系统功能规范（试行）》（电监市场[2003]22号）的要求，结合电力市场建设的实践经验和电力市场运营的技术需求，编制本标准。
+本标准的附录A为规范性附录。
+本标准的附录B、附录C为资料性附录。
+本标准由中国电力企业联合会提出。
+本标准由电力行业电网运行与控制标准化技术委员会归口并解释。
+本标准主要起草单位：国家电力调度通信中心。
+本标准参加起草单位：中国电力科学研究院、国电自动化研究院、东北电网有限公司、华北电网有限公司、浙江省电力公司、河南省电力公司。
+本标准主要起草人：辛耀中、史连军、韩放、李毅松、刘宗甸、王文、宋燕敏、曹荣章、王海宁、杨立兵、王冬明、孙维真、曹志东、陈庆淇、武亚光、张喆、尚金诚、张锐、许洪波。
+Ⅱ
+公众号：规范标准库（免费下载）ID: guifan8899
+DL/T1008-2006
+电力市场运营系统功能规范和技术要求
+1 范围
+本标准规定了电力市场运营系统的基本功能规范和技术要求。
+本标准适用于电力市场运营系统的建设、应用和验收。
+2 规范性引用文件
+下列文件中的条款通过本标准的引用而成为本标准的条款。凡是注日期的引用文件，其随后所有的修改单（不包括勘误的内容）或修订版均不适用于本标准，然而，鼓励根据本标准达成协议的各方研究使用这些文件的最新版本。凡是不注日期的引用文件，其最新版本适用于本标准。
+DL/T890能量管理系统应用程序接口 (EMS-API)(IEC 61970, IDT)
+电监会5号令：《电力二次系统安全防护规定》，国家电力监管委员会，2004年12月
+3 术语和定义
+下列术语和定义适用于本标准。
+3.1
+电力市场运营系统 electricity market operation system (EMOS)
+指基于电力系统及电力市场理论，应用计算机、网络通信、信息处理技术，满足电力市场运营规则要求的技术支持系统。
+3.2
+数据申报子系统 data process subsystem (DPS)
+指电力市场运营系统中，依据市场规则接受和管理市场参与者注册和申报数据的子系统。
+3.3
+长期交易子系统 long-term trade subsystem (LTS)
+依据市场规则，根据相关电力市场信息和电力系统运行数据，针对一年及以上的交易，制订交易计划并对交易过程进行管理的子系统。
+3.4
+短期交易子系统 short-term trade subsystem (STS)
+依据市场规则，根据相关电力市场信息和电力系统运行数据，针对月、周及多日的交易，制订交易计划并对交易过程进行管理的子系统。
+3.5
+日前交易子系统 day-ahead trade subsystem (DATS)
+依据市场规则，根据相关电力市场信息和电力系统运行数据，针对次日的交易，制订交易计划并对交易过程进行管理的子系统。
+3.6
+实时交易子系统 real time trade subsystem (RTS)
+依据市场规则，根据相关电力市场信息和电力系统运行数据，针对当日内的交易，制订交易计划并对交易过程进行管理的子系统。
+1
+公众号：规范标准库（免费下载）ID: guifan8899
+DL/T1008—2006
+3.7
+结算管理子系统 settlement and billing subsystem (SBS)
+指电力市场运营系统中，依据市场规则对市场参与者进行考核管理和结算的子系统。
+3.8
+合同管理子系统 contract management subsystem (CMS)
+指电力市场运营系统中，依据市场规则，对市场中的各类合同的执行、变更等进行跟踪管理的子系统。
+3.9
+市场分析子系统 market analysis subsystem (MAS)
+指电力市场运营系统中，对市场运营情况进行分析、评估和预测的子系统。
+3.10
+信息发布子系统 information publishing subsystem (IPS)
+指电力市场运营系统中，依据市场规则发布相关电力市场信息和电力系统运行数据的子系统。
+4 总则
+4.1  电力市场运营系统应满足国家、区域和省级电力市场运营的要求并充分考虑未来发展的需要，以电力市场运营规则为基础，结合我国国情尤其是本地区的实际情况，认真借鉴国内外先进的经验和实用技术，充分利用已有的技术资源和设备，统筹规划、分步实施。
+4.2  电力市场运营系统应采用开放式、分布式体系结构，便于系统的集成扩充，适应技术发展和电力市场逐步完善的需要。
+4.3  电力市场运营系统应采用国际标准、国家标准、行业标准及通用技术。
+4.4  电力市场运营系统应采用标准化的接口，以满足电力市场运营系统相互间的数据交换和访问。
+4.5  电力市场运营系统应符合《电力二次系统安全防护规定》的要求。
+5 总体要求
+5.1 功能规范
+电力市场运营系统主要由以下子系统组成：数据申报子系统 (DPS)、长期交易管理子系统 (LTS)、短期交易管理子系统 (STS)、日前交易管理子系统 (DATS)、实时交易管理子系统 (RTS)、结算管理子系统 (SBS)、合同管理子系统 (CMS)、市场分析子系统 (MAS)、信息发布子系统(IPS)等。
+各子系统的逻辑结构如图1所示。
+合同管理子系统
+市场分析子系统
+结算管理子系统
+CMS
+MAS
+SBS
+能量管理系统
+EMS
+长期交易管理子系统
+LTS
+电能量计量系统
+短期交易管理子系统
+TMR
+STS
+日前交易管理子系统
+DATS
+其他系统
+实时交易管理子系统
+RTS
+信息发布于系统
+数据申报子系统
+IPS
+DPS
+电话网络
+数据网络
+市场成员报价系统
+（包括各类市场主体）
+图1 电力市场运营系统逻辑结构示意图
+2
+公众号：规范标准库（免费下载）ID: guifan8899
+DL/T1008——2006
+电力市场运营系统应满足下列功能或要求：
+a）应能按照交易周期的划分，实现长期、短期、日前、实时市场中的各类交易，满足电力市场发展要求。
+b）应对电力市场的数据申报、交易、结算、合同管理、市场分析和信息发布等环节提供技术支持。
+c）应为市场参与者提供便利的数据申报手段，对申报的数据进行有效性校验，并能保证数据申报的确定性和完整性。
+d）应根据市场规则的要求，满足电力电量、辅助服务、输电服务等交易运作管理的需要，完成各类交易计划的制订和下达，并对执行情况进行监控和记录。
+e）应对交易计划的执行情况进行跟踪和考核，根据合同和市场规则对各类交易进行结算。
+f）应能够对合同的执行、变更情况进行跟踪管理，并对合同完成情况进行统计和评估。
+g）应能对市场信息进行统计，对市场运营情况进行分析、评估和预测。
+h）应根据市场规则发布市场信息，并确保信息的时效性、正确性、完整性和安全性。
+i）购、售电市场成员终端应通过安全方式访问系统，采用标准格式实现数据申报与信息下载。
+j）应满足国家有关的电力二次系统安全防护的要求。
+k）应提供与其他系统之间的数据交换接口。
+1）应根据市场规则的要求，保存市场数据，为市场反演提供支持。
+m）可为市场分析与研究提供技术手段。
+5.2 技术要求
+5.2.1  可靠性：系统的结构设计、设备配置、软件编制要保证电力市场运营系统的可靠运行。重要的设备、软件和数据应具有冗余配置及备份措施，并为系统故障的隔离和排除提供快捷的技术手段。
+5.2.2  安全性：采用安全防护措施，提供严格的用户认证和管理手段以及身份认证技术，对用户和信息进行授权与管理，并考虑信息保密的时效性，保证系统及其数据的安全。
+5.2.3 完整性：要保证数据和交易的完整，在系统偶然故障造成数据丢失或交易中断时，应有补救措施。
+5.2.4   一致性：要保证各个子系统获取的数据与数据源保持一致。
+5.2.5  即时性：应保证报价、交易、结算及信息发布的即时处理和数据及时传输。
+5.2.6 开放性：采用开放式体系结构和分布式系统设计，满足电力市场发展需求。软、硬件接口符合国际标准，满足软件平台、硬件平台的兼容及各子系统间的互联，便于第三方软件集成。
+5.2.7 可扩展性：电力市场运营系统应采用模块化设计，适应电力市场的发展和规则的变化，并适应新技术的发展和设备的升级换代。
+5.2.8 电力市场运营系统应操作方便，易于使用，结构设计应注重系统的可维护性，并提供系统运营状态实时监视信息。
+5.2.9  电力市场运营系统应注重整个系统数据流的优化，提高系统运行效率。
+6 各子系统功能规范
+6.1 数据申报子系统 (DPS)
+6.1.1 逻辑结构
+6.1.2  主要功能
+a）申报数据的输入和接收；
+b）申报数据有效性校验、处理保存、确认；
+c）根据市场规则，提供申报数据查询功能；
+d）提供方便、灵活的多渠道申报手段；
+e）系统应采用安全保护措施，具备完善的身份认证和数据加密传输机制，确保申报数据的安全、保密、不可否认和防篡改。
+3
+DL/T1008——2006
+数据申报终端
+数据申报终端
+数据申报终端
+输入接口
+申报数据接收
+数据有效性校验
+数据申报子系统
+申报接收确认
+申报数据查询
+输出接口
+短期交易子系统
+实时交易子系统
+信息发布子系统
+长期交易子系统
+日前交易子系统
+市场分析子系统
+图2 数据申报子系统逻辑框图
+6.1.3 输入参数
+a）交易时段；
+b）技术参数；
+c）投标信息等。
+6.1.4 输出参数
+a）申报信息；
+b）校验信息等。
+6.2 长期交易子系统 (LTS)
+6.2.1 逻辑结构
+市场分析子系统
+数据申报子系统
+合同管理子系统
+2
+输入接口
+长期交易电量计划
+长期交易电量分解计划
+长期交易电力分解计划
+长期交易管理子系统
+长期辅助服务计划
+长期输电服务计划
+安全校核与阻塞管理
+输出接口
+短期交易子系统
+市场分析子系统
+信息发布子系统
+结算子系统
+图3 长期交易管理子系统逻辑框图
+6.2.2 主要功能
+a）长期交易电量计划；
+b）长期交易电量分解计划；
+c）长期交易电力分解计划；
+d）长期辅助服务计划；
+e）长期输电服务计划；
+f）安全校核与阻塞管理等。
+6.2.3 输入数据
+a）长期负荷预测；
+4
+DL/T 1008——2006
+b）机组技术参数；
+c）机组经济数据；
+d）检修计划；
+e）约束条件；
+f）初始状态：
+g）合同信息等。
+6.2.4 输出数据
+a）各市场成员的成交电量；
+b）各市场成员的成交电价；
+c）长期交易电量分解计划；
+d）长期交易电力计划；
+e）安全校核与阻塞管理结果；
+f）长期辅助服务计划；
+g）长期输电服务计划等。
+6.2.5 约束条件
+a）机组约束；
+b）电网安全约束；
+c）市场约束；
+d）其他约束条件。
+6.3 短期交易子系统(STS)
+6.3.1 逻辑结构
+长期交易子系统
+市场分析子系统
+数据申报子系统
+输入接口
+短期交易计划
+短期交易电量分解
+短期交易电力分解
+M期交易管理子系统
+交易计划滚动修正
+安全校核与阻塞管理
+短期辅助服务计划
+短期输电服务计划
+输出接口
+市场分析子系统
+日前交易子系统
+信息发布子系统
+结算子系统
+图4 短期交易管理子系统逻辑框图
+6.3.2 主要功能
+a）短期交易计划：
+b）短期交易电量分解计划；
+c）短期交易电力分解计划；
+d）交易计划滚动修正；
+e）安全校核与阻塞管理；
+f）短期辅助服务计划；
+g）短期输电服务计划等。
+6.3.3 输入数据
+a）负荷预测数据；
+DL/T1008——2006
+b）机组技术参数：
+c）机组经济数据；
+d）检修计划数据；
+e）约束条件；
+f）初始状态：
+g）长期交易计划及其完成情况：
+h）联络线交换（易）计划等。
+6.3.4 输出数据
+a）各市场成员的成交电量；
+b）各市场成员的成交电价；
+c）短期交易电量分解计划；
+d）电量滚动修正计划；
+e）短期交易电力计划；
+f）安全校核与阻塞调度结果等。
+6.3.5 约束条件
+a）机组约束；
+b）电网安全约束；
+c）市场约束；
+d）其他约束条件。
+6.4 日前交易管理子系统 (DATS)
+6.4.1 逻辑结构
+数据申报子系统
+短期交易子系统
+能量管理系统
+输入接口
+短期负荷预测管理
+日前交易计划
+安全校核与阻遏管理
+日前交易曾理子系统
+日前辅助服务计划
+日前输电服务计划
+计划下发
+输出接口
+实时交易子系统
+信息发布子系统
+结算子系统
+市场分析子系统
+图5 日前交易管理子系统逻辑框图
+6.4.2 主要功能
+a）短期负荷预测管理；
+b）日前交易计划；
+c）安全校核与阻塞管理；
+d）日前辅助服务计划；
+e）日前输电服务计划；
+f）计划下发等。
+6.4.3 输入数据
+a）负荷预测数据；
+6
+DL/T1008——2006
+b）机组技术参数；
+c）机组经济数据；
+d）长期交易电力计划；
+e）短期交易电力计划；
+f）约束条件；
+g）初始状态：
+h）检修计划：
+i）联络线交换（易）计划等。
+6.4.4 输出数据
+交易日的每个交易时段的日前交易计划、辅助服务计划、输电计划及交易价格、安全约束及阻塞管理情况。主要包括：
+a）日前市场电价；
+b）日前交易计划；
+c）安全校核与阻塞管理；
+d）可调发电容量、区域间交换功率；
+e）日前辅助服务计划；
+f）日前输电服务计划等。
+6.4.5 约束条件
+a）机组约束；
+b）电网安全约束：
+c）市场约束；
+d）其他约束条件。
+6.5 实时交易管理子系统 (RTS)
+6.5.1 逻辑结构
+数据申报子系统
+能量管理系统
+短期交易子系统
+日前交易子系统
+输入接口
+超短期负荷预测
+实时交易计划
+实时辅助服务计划
+实时输电服务计划
+安全校核和阻塞管理
+实时交易计划下发
+实时交易管理子系统
+交易计划执行监测
+输出接口
+能量管理系统
+信息发布子系统
+结算子系统
+市场分析子系统
+图6 实时交易管理子系统逻辑框图
+6.5.2 主要功能
+a）超短期负荷预测；
+b）实时交易计划；
+c）实时辅助服务计划；
+d）实时输电服务计划；
+e）安全校核和阻塞管理；
+7
+DL/T 1008—2006
+f）实时交易计划下发；
+g）交易计划执行监测等。
+6.5.3 输入数据
+a）超短期负荷预测数据；
+b）机组竞价数据；
+c）机组技术数据；
+d）日交易计划；
+e）约束条件；
+f）联络线交换（易）计划等。
+6.5.4 输出数据
+a）实时市场电价；
+b）实时交易计划；
+c）安全校核与阻塞管理；
+d）实时辅助服务计划；
+e）实时输电服务计划。
+6.5.5 约束条件
+a）机组约束；
+b）电网安全约束；
+c）市场约束；
+d）其他约束条件。
+6.6 结算管理子系统 (SBS)
+6.6.1 逻辑结构
+能量管理系统
+实时交易子系统
+长期交易子系统
+电量计量系统
+日前交易子系统
+短期交易子系统
+输入接11
+交易电量结算
+容量电费结算
+辅助服务结算
+输电费结算
+联络线交换电量结算
+考核管理
+结算管理子系统
+统计
+输出接口
+市场分析子系统
+信息发布子系统
+图7 结算管理子系统逻辑框图
+6.6.2 主要功能
+a）交易电量结算，包括合同、长期、短期、日前和实时电量结算；
+b）容量电费结算；
+c）辅助服务结算；
+d）输电费结算：
+e）联络线交换电量的结算；
+8
+DL/T1008——2006
+f）考核管理；
+g）统计等。
+6.6.3 输入数据
+a）长期交易结果；
+b）短期交易结果：
+c）滚动调整结果；
+d）日前交易结果；
+e）实时交易结果；
+f）调度指令：
+g）运行记录；
+h）电能量计量数据等。
+6.6.4 输出数据
+结算子系统按日结算，按月清账，输出的数据主要包括：
+a）合同、长期、短期、日前和实时电量、电力数据：
+b）分类电量结算单：
+c）分类辅助服务费；
+d）输电费；
+e）考核结算信息；
+f）统计信息等。
+6.7 合同管理子系统 (CMS)
+6.7.1 逻辑结构
+结算子系统
+数据申报子系统
+长期交易子系统
+短期交易子系统
+输入接口
+合同录入
+合同执行情况跟踪
+合同电量变更管理
+合同电量统计
+合同电量查询
+合同管理子系统
+输出接口
+市场分析子系统
+日前交易子系统
+结算子系统
+信息发布子系统
+图8 合同管理子系统逻辑框图
+6.7.2 主要功能
+a）合同录入；
+b）合同执行情况跟踪；
+c）合同电量变更管理；
+d）合同电量统计；
+e）合同电量查询等。
+6.7.3 输入数据
+a）各种交易合同；
+b）合同执行信息；
+9
+DL/T1008——2006
+c）合同变更信息等。
+6.7.4 输出数据
+a）交易合同分类信息；
+b）合同统计信息等。
+6.8 市场分析子系统(MAS)
+6.8.1 逻辑结构
+能量管理系统
+实时交易子系统
+长期交易子系统
+结算子系统
+日前交易子系统
+短期交易子系统
+输入接口
+市场信息分类统计
+市场信息查询
+市场运营情况分析
+市场分析子系统
+市场风险评估
+输出接口
+信息发布子系统
+图9 市场分析子系统逻辑框图
+6.8.2 主要功能
+a）市场信息分类统计；
+b）市场信息查询；
+c）市场运营情况分析；
+d）市场交易、安全、约束和风险评估等。
+6.8.3 输入数据
+a）长期交易信息；
+b）短期交易信息；
+c）日前交易信息；
+d）实时交易信息：
+e）网络约束信息等。
+6.8.4 输出数据
+a）市场统计信息；
+b）市场运营分析结果；
+c）交易评估分析结果；
+d）安全评估结果；
+e）风险评估结果；
+f）市场预测等。
+6.9 信息发布子系统 (IPS)
+6.9.1 逻辑结构
+6.9.2 主要功能
+a）市场信息汇总；
+10
+DL/T1008——2006
+输入接口
+市场信息汇总
+市场信息的分类发布
+市场信息综合查询
+市场信息下载
+成员确认信息接收
+数据维护与管理
+信息发布子系统
+信息更新
+输出接口
+综合查询终端
+综合查询终端
+综合查询终端
+图10 信息发布子系统逻辑框图
+b）市场信息的分类发布：
+c）市场信息综合查询；
+d）市场信息下载：
+e）成员确认信息接收：
+f）数据维护与管理；
+g）信息更新等。
+6.10 系统运行管理
+对电力市场运营系统运行中各种状态和操作记录进行处理，并对市场成员、市场参数等信息进行管理。
+6.10.1 硬件运行管理
+对系统内所有计算机运行状态的监视和管理。
+6.10.2 软件运行管理
+a）对系统所有软件进程的监视和控制：
+b）对系统内各应用软件可用率的统计和监视。
+6.10.3 操作记录统计
+a）对系统内各应用软件功能及操作的响应时间的检测和统计；
+b）系统操作记录的查询和统计。
+6.10.4 参数管理
+a）各类数据保存年限的定义；
+b）系统历史数据检索和管理的方法；
+c）市场运营参数的变更管理；
+d）市场竞价机组的变更管理；
+e）市场成员的变更管理；
+f）并网发电机组的变更管理；
+g）系统操作人员的变更管理。
+6.10.5 异常管理
+a）对应用级告警信息（不影响系统继续运行）的监视和统计；
+b）对系统错误信息（系统异常或个别软件运行异常，如数据库关闭）的监视和统计；
+c）各软件运行出现异常后的恢复；
+d）系统运行崩溃后的恢复；
+11
+DL/T1008-2006
+e）应用软件被破坏（如病毒感染）后的恢复；
+f）整个系统被破坏（如硬盘损坏）后的恢复；
+g）数据备份与恢复。
+7 数据交换内容
+7.1  数据交换要求
+电力市场运营系统数据交换的设计，应满足运营系统内部各子系统之间、运营系统与外系统之间数据交换的需要，同时还应满足电力市场的信息发布及其他管理功能的要求。
+电力市场运营系统的数据交换，应在满足市场运营规则的基础上，结合市场实际，确定交换内容。
+7.2 数据交换类型
+a）与调度交易中心其他系统的数据交换；
+b）与市场成员的数据交换；
+c）不同电力市场运营系统相互间的数据交换。
+7.3  与调度交易中心其他系统的数据交换
+需要与运营系统交换数据的外部系统包括：能量管理系统(EMS)、电能量计量系统(TMR)、调度生产管理系统 (DMIS)、水调自动化系统 (HMS)等。
+7.3.1 与能量管理系统(EMS)的数据交换
+电力市场运营系统向能量管理系统输出数据内容为交易计划结果。
+从能量管理系统读取数据内容包括电力系统运行数据和电网数据。
+7.3.2 与电能量计量系统(TMR)数据交换
+从电能量计量系统读取数据内容为带时标的电能量数据。
+7.3.3  电力市场运营系统与调度生产管理系统(DMIS)的数据交换
+电力市场运营系统向调度生产管理系统输出的数据内容为相关市场信息。
+从调度生产管理系统读取数据内容为相关电网信息。
+7.3.4  电力市场运营系统与水调自动化系统(HMS)的数据交换
+电力市场运营系统从水调自动化系统读取数据包括水电计划和水情信息。
+7.4  与电力市场成员接入系统的数据交换
+7.4.1  与电力市场成员接入系统的数据交换内容包括
+a）市场成员申报的注册数据：
+b）市场成员申报的竞价数据；
+c）市场运营信息；
+d）合同信息；
+e）交易计划信息及指令；
+f）考核结算信息。
+7.4.2  电力市场成员接入系统向电力市场运营系统上报数据
+7.4.2.1 市场注册信息
+主要包括：市场成员注册信息、竞价机组注册信息、实际发电机组信息、交易员注册信息。
+7.4.2.2 市场成员合同信息
+主要包括：初始合同信息、变更合同信息。
+7.4.2.3 市场成员长期交易申报信息
+主要包括：申报交易时段，技术参数，投标信息（包括容量、分段电量和电价）等。
+7.4.2.4 市场成员短期交易申报信息
+主要包括：申报交易时段，技术参数（是否调峰、最大最小功率、升降负荷速率等），投标信息（包
+12
+DL/T1008-2006
+括容量、分段电量和电价）等。
+7.4.2.5  市场成员日前交易申报信息
+主要包括：申报交易时段，技术参数（是否调峰、是否参加AGC、最大最小功率、升降负荷速率等），投标信息（包括容量、分段电量和电价）等。
+7.4.2.6 市场成员实时交易申报信息
+主要包括：申报交易时段，技术参数（是否调峰、是否参加AGC、最大最小功率、升降负荷速率、启停时间等），投标信息（包括容量、分段电量和电价）等。
+7.4.3  电力市场运营系统向电力市场成员接入系统下达数据
+7.4.3.1  电力市场运营系统发布的市场运营信息
+为了参加电力市场，市场成员需要了解电力市场的各种运营信息，电力市场运营系统应能够为市场成员提供所需的各种市场信息，用于查询和下载。市场运营信息包括：
+a）市场成员注册信息；
+b）负荷预报信息；
+c）竞价空间，最高最低限价：
+d）网络阻塞信息；
+e）网损因子；
+f）输电费用。
+7.4.3.2  电力市场运营系统发布的该市场成员竞价结果信息
+a）长期交易合同信息；
+b）短期交易合同信息；
+c）日前市场交易计划；
+d）实时市场交易计划；
+e）辅助服务计划；
+f）输电服务计划等。
+7.4.3.3  电力市场运营系统发布的该市场成员结算信息
+a）合同结算信息：
+b）所属竞价机组的长期结算信息；
+c）所属竞价机组的短期结算信息；
+d）所属竞价机组的日前结算信息；
+e）所属竞价机组的实时结算信息；
+f）所属竞价机组的辅助服务结算信息；
+g）上网电量计量信息；
+h）考核结算结果；
+i）市场成员最终结算结果。
+7.5不同电力市场运营系统相互间的数据交换
+7.5.1  不同电力市场运营系统相互间的数据交换应保证市场的开放和系统的安全稳定运行。
+7.5.2  不同电力市场运营系统相互间的数据交换包括有关市场经济数据、电网预测数据、检修数据、电网运行数据、安全校核结果和输电堵塞情况等。
+8 系统软硬件配置
+8.1  硬件配置要求
+8.1.1 配置原则
+a）硬件设备应采用标准化设备，计算机和网络设备应满足不断优化、平滑升级的需要；
+13
+DL/T1008——2006
+b）硬件配置满足系统功能和性能要求，关键设备根据系统功能的需要考虑冗余配置；
+c）系统采用稳定成熟的操作系统，部分服务器的操作系统支持集群，确保系统的可靠性和可用性；
+d）硬件设备、系统架构必须遵循高安全性原则，符合国家相关部门颁布的安全法规、条例的要求，确保网络安全：
+e）硬件设备的噪声、辐射等其他指标必须满足相关的国家标准或条例的要求。
+8.1.2 数据库服务器及备份设备
+数据库服务器应采用安全成熟的操作系统，支持集群、RAID等技术特性，可采用冗余配置。备份软件与设备必须安全可靠，使用方便，能够自动执行备份策略。
+8.1.3 应用服务器、客户终端
+根据系统设计的需要可选用高性能的工作站或服务器。所选设备必须具有良好的可靠性和灵活的可扩展性，单个设备故障不应引起主要功能的丧失。
+8.1.4 购、售电市场成员终端
+购、售电市场成员终端部署在各市场成员处，是市场成员接入电力市场运营系统，实现数据交互，参与电力市场运营的终端系统。市场成员应采取措施，确保购、售电终端系统的网络安全。
+8.1.5 网络设备
+根据需要选用交换机、防火墙、路由器等。
+8.2  软件配置要求
+8.2.1  应用软件要求
+应用软件应统筹规划，合理划分与部署，保证软件结构清晰，易于管理和维护。系统设计时应充分考虑将来系统完善和扩展的需要。
+应用软件按多层分布式应用体系结构构建。后台服务必须保证运行稳定、可靠，能够快速响应客户终端的请求。按市场规则要求，核心算法应准确，算法原理公开。具备统一管理、调度多个后台服务和主备互用的能力。客户端要求易于使用、易于安装维护。
+8.2.2 数据库管理系统
+数据库管理系统必须满足高可靠性、高性能、高可伸缩性和高安全性的指标要求，具备在多个用户同时存取和不间断运行的能力，提供联机数据备份、容错、容灾以及信息安全等措施。
+8.2.3 软件开发扩展
+电力市场运营系统应提供用户二次开发所需的接口功能，方便第三方软件接入。系统提供集成开发软件环境，便于用户软件维护和应用软件开发。
+8.3 系统接口
+电力市场运营系统应按以下原则实现与能量管理系统、电能量计量系统、调度生产管理系统等之间的数据交换：
+a）数据交换应能满足系统之间数据交换的需要，又不影响各自系统的独立性；
+b）数据开放的同时必须保证安全性，安全性必须有安全防护、认证、加密传输等多种安全措施来保证；
+c）电力市场运营系统应充分利用已有系统资源；
+d）优化系统间的数据传输，提高效率。
+8.3.1 与能量管理系统 (EMS)的接口
+能量管理系统与电力市场运营系统交换数据包括非实时数据和实时数据的交换，应支持定时和即时召唤等功能，可定义数据交换内容。对于非实时数据的交换，建议采用基于标准的方式（如CIM/XML或类似方式）进行数据导入、导出。实时数据的交换，应满足时效性的要求。
+8.3.2 与电能量计量系统 (TMR)的接口
+电力市场运营系统与电能量计量系统交换电量数据。要求电量数据准确、可靠，应支持定时和即时召唤等多种形式。
+14
+DL/T1008——2006
+数据接口建议采用XML或类似的方式定义数据格式，采用标准协议进行数据文件的网络传输。
+8.3.3 与调度生产管理系统 (DMIS)的接口
+可采用两种数据接口方式：
+a）电力市场运营系统通过综合数据平台交换数据，实现数据共享，综合数据平台提供数据安全访问控制功能：
+b）电力市场运营系统提供通用数据接口服务，采用XML等方式定义数据格式，并公布访问协议，外系统通过编写接口程序的方式进行数据访问。电力市场运营系统提供用户认证和安全数据访问控制功能。
+8.3.4 与其他电力市场运营系统的接口
+电力市场运营系统与其他电力市场运营系统可采用标准类型文本方式，如XML或类似标准方式。
+9 数据交换模型
+9.1  为保证电力市场运营系统的开放性，应在符合通用国际标准的基础上，对电力市场运营系统所涉及的数据模型进行规范。
+9.2 建议电网结构信息及运行信息的模型符合DL/T 890系列标准的要求，能够实现数据在CIM/XML方式下的正确导入导出。
+9.3  电力市场运营系统数据交换模型的详细信息在附录A中描述。
+9.4 采用基于XML的数据交换格式可参考附录B中描述，附录C提供了符合定义的范例文件。
+9.5  采用E-语言格式的数据交换格式可参考附录D.
+10 安全防护
+10.1 安全防护目标
+电力市场运营系统安全防护的总体目标是：防止电力市场运营系统遭受攻击和侵害导致核心业务中断。保护系统的实时和历史数据，主要防止数据被非授权修改和删除；对系统中的敏感数据，尤其是经广域网络传输的敏感数据，采取签名和认证技术。
+10.2  安全防护的实施原则
+a）电力市场运营系统安全防护的实施应遵循《电力二次系统安全防护规定》要求；
+b）电力市场运营系统属于电力二次系统，作为调度交易中心二次系统安全防护体系的一部分，应充分利用调度交易中心投运的网络安全设施和系统，包括防火墙、隔离设备、调度证书及认证装置、入侵检测和防病毒系统等；
+c）承载电力市场运营系统的广域数据交换主要采用电力调度数据网，实现电厂报价系统与电力市场运营系统之间、各级电力市场运营系统之间的数据交换；
+d）电力调度数据网没有覆盖的地方，为了保证电力市场的顺利进行，可借用其他广域网络，但必须依据《电力二次系统安全防护规定》，加强安全防护；
+e）对社会公布的信息经物理隔离装置经管理信息区发布。
+10.3 安全认证
+在电力市场运营系统中应采用公钥(PK)技术，安全地进行事务处理，保证交易过程中的数据完整性和用户操作的不可否认性。身份认证系统以流程简单、有限度扩展的原则为出发点，主要实现对请求方的身份认证、关键数据数字签名、传输加密、交易访问控制等几项功能。
+10.4 安全防护设备的技术要求
+在电力市场运营系统安全防护部署中采用的安全设备，包括防火墙、隔离设备、加密认证装置、防病毒及入侵检测系统、系统的备份与恢复、安全Web、主机加固、安全拨号、数字证书等必须满足《电力二次系统安全防护规定》的要求。
+15
+DL/T1008—2006
+附	录 A
+（规范性附录）
+数	据	交	换	模	型
+A.1  市场成员申报数据
+A. 1.1  中长期（年度）申报信息
+类别及名称	数据类型	备	注
+申报单编号	int	唯一标志该申报单
+申报年份	date	可以为下一年及以后多年
+竞价单元编号	int	标志竞价单元
+投标电量	float	必须小于机组年度期货交易可用电量，投标电量可以分多段
+投标电价	float	投标电价必须在最高最低限价之间，每一段投标电量对应一个投标价格。对发电商，价格非减排列，对购电商，价格非增排列
+申报人	char	申报的交易员编号
+报价时间	date	报价单接收的日期，由接收服务自动形成
+版本号	int	支持多次报价
+A. 1.2 短期（月度）申报信息
+类别及名称	数据类型	备	注
+申报单编号	int	由报价接收服务自动编号，唯一标志该报价单
+申报月份	date	可以为下一月及以后多月，市场成员可以提前完成多月的期货申报
+竞价单元编号	int	标志竞价单元
+投标电量	float	必须小于机组可用于月度期货交易的发电可用电量，投标电量可以分多段
+投标电价	float	投标电价必须在最高最低限价之间，每一段投标电量对应一个投标价格。对发电商，价格非减排列，对购电商，价格非增排列
+申报人	char	申报的交易员编号
+报价时间	date	报价单接收的日期，由接收服务自动形成
+版本号	int	支持多次报价
+A. 1.3  日前市场申报信息
+类别及名称	数据类型	备	注
+申报单编号	int	由报价接收服务自动编号，唯一标志该报价单
+申报日期	date	可以为次日及以后多日，市场成员可以提前完成多日申报
+16
+DL/T1008-2006
+（续表）
+类别及名称	数据类型	备	注
+竞价单元编号	int	标志竞价单元
+投标电量	float	必须小于机组可用于日前交易的发电可用电容量，每个交易时段投标容量可以分多段。交易时段根据市场规则设定，在日前市场中可以按每小时或者半小时设置交易时段，也可以按峰谷平设置交易时段，也可以将次日看成一个交易时段，降低申报数据量
+投标电价	float	投标电价必须在最高最低限价之间，各个交易时段的每一段投标容量对应一个投标价格。对发电商，价格非减排列，对购电商，价格非增排列
+出力上限	float	每个交易时段出力上限设置，计划安排不能超过上限设置
+出力下限	float	每个交易时段出力下限设置，竞价单元的发电计划不能低于下限
+固定功率	float	对于机组缺陷运行等情况下，可以申报发固定功率，每个时段可以申报一个，用“-1”等特殊标志表示该时段不要求固定功率。根据规则，申报固定出力表示该竞价单元愿意接收任何市场电价
+固定功率原因	char	说明机组申报固定功率的理由
+Agc标志	int	每时段一个，代表该机组是否愿意参加AGC调节
+调峰标志	int	表示次日该机组是否参与调峰服务
+日发电最限制	float	机组次日可发最大电量
+机组爬坡参数	float	机组的爬坡速率
+深调峰标志	int	机组是否愿意参加深调峰
+申报人	char	申报的交易员编号
+报价时间	date	报价单接收的时间，由接收服务自动形成
+版本号	int	支持多次报价
+A. 1.4 实时交易申报信息
+类别及名称	数据类型	备	注
+申报单编号	int	由报价接收服务自动编号，唯一标志该报价单
+申报日期	date	因为提前一天申报，日期为次日
+竞价单元编号	int	标志竞价单元
+功率增量	float	在实时市场中允许在实际功率基础上可以上调的功率增量，可以分多段
+增量电价	float	投标电价可正可负，每一段增量对应一个投标价格。对发电商，价格非减排列，对购电商，价格非增排列
+功率减少量	float	在实时市场中允许在实际功率基础上可以下调的功率减少量，可以分多段
+减量电价	float	投标电价可正可负，每一段出力减量对应一个投标价格。对发电商，价格非增排列，对购电商，价格非减排列
+申报人	char	申报的交易员编号
+报价时间	date	报价单接收的时间，由接收服务自动形成
+版本号	int	支持多次报价
+17
+DL/T1008——2006
+A. 1.5 系统裕度申报信息
+类别及名称	数据类型	备	注
+申报单编号	int	由报价接收服务自动编号，唯一标志该充裕度申报单
+申报日期	date	对月度申报，为未来任意一个月；对短期申报，为未来任意一天
+物理机组编号	int	标志申报的实际发电机组
+最大可用功率	float	机组能够达到的最大发电功率
+发电量限制	float	对应申报时段内由于燃料等原因最大可用发电量
+申报人	char	申报的交易员编号
+报价时间	date	报价单接收的时间，由接收服务自动形成
+版本号	int	支持多次报价
+A. 1.6 年度检修申报信息
+类别及名称	数据类型	备注
+申报单编号	int	由报价接收服务自动编号，唯一标志该设备检修申报单
+检修年份	date	标明检修的年度归属
+设备名称	char	将要申请检修的设备名称
+检修类别	int	检修分类，有大修、小修和临检等
+并联机组	char	检修该设备将可能影响到的机组列表
+影响容量	float	检修该设备将影响到的机组降功率
+检修工期	float	检修预计持续的天数
+检修开始时间	date	检修预计开始时间，必须落在检修年份之内
+检修结束时间	date	检修预计结束时间，必须落在检修年份之内
+检修开始最大提前时间	float	单位为天
+检修开始最大延后时间	float	单位为天
+其他详细信息	char	填写其他相关详细信息
+申报人	char	申报的交易员编号
+报价时间	date	申报单接收的时间，由接收服务自动形成
+A. 1.7 月度检修申报信息
+类别及名称	数据类型	备	注
+申报单编号	int	由报价接收服务自动编号，唯一标志该设备检修申报单
+检修月份	date	标明检修的月度归属
+设备名称	char	将要申请检修的设备名称
+18
+DL/T1008——2006
+（续表）
+类别及名称	数据类型	备	注
+检修类别	int	检修分类，有大修、小修和临检等
+并联机组	char	检修该设备将可能影响到的机组列表
+影响容量	float	检修该设备将影响到的机组降功率
+检修工期	float	检修预计持续的天数
+检修开始时间	date	检修预计开始时间，必须落在检修月份之内
+检修结束时间	date	检修预计结束时间，必须落在检修月份之内
+检修开始最大提前时间	float	单位为天
+检修开始最大延后时间	float	单位为天
+其他详细信息	char	填写其他相关详细信息
+申报人	int	申报的交易员编号
+报价时间	date	申报单接收的时间，由接收服务自动形成
+A. 1.8 日检修申报信息
+类别及名称	数据类型	备	注
+申报单编号	int	由报价接收服务自动编号，唯一标志该设备检修申报单
+检修日期	date	标明申报的检修日期
+设备名称	char	将要申请检修的设备名称
+检修类别	int	检修分类，有大修、小修和临检等
+并联机组	char	检修该设备将可能影响到的机组列表
+影响容量	float	检修该设备将影响到的机组降出力
+检修工期	float	检修预计持续的天数
+检修开始时间	date	检修预计开始时间，必须在检修日期之内
+检修结束时间	date	检修预计结束时间，必须落在检修日期之内
+检修开始最大提前时间	float	单位为小时
+检修开始最大延后时间	float	单位为小时
+其他详细信息	char	填写其他相关详细信息
+申报人	int	申报的交易员编号
+报价时间	date	申报单接收的时间，由接收服务自动形成
+A.2 电网数据
+电力市场运营系统所需电网数据通过与EMS系统交换获得。电力市场运营系统与EMS的数据交换
+19
+DL/T 1008——2006
+模型包括：厂站信息、断路器信息、隔离开关信息、接地开关信息、母线信息、交流线段端点信息、支路信息、发电机历史信息、负荷信息、容抗器信息、AGC投退信息等。
+数据模型的详细类别遵循DL/T890规定。
+A.3  电量计量数据
+类别及名称	数据类型	备	注
+计量点编号	int
+计量点名称	char
+正向有功	float
+反向有功	float
+正向无功	float
+反向无功	float
+时标	date	所有计量量都应带有时间标志
+A.4 天气信息
+电力市场运营系统与信息管理系统交互获得气象信息。
+类别及名称	数据类型	备	注
+时间	date
+地区编号	int
+地区名称	char
+光照	float	晴、阴以及雨等光照强度
+雨量	float
+湿度	float
+风力	float
+最高温度	float
+最低温度	float
+A.5 财务信息
+电力市场运营系统向财务管理系统发送结算信息。
+类别及名称	数据类型	备注
+市场成员序号	int	包括按交易时段、日、月统计的成交电量，年度总成交电量、以及年度超欠电量
+市场成员名称	char	以月度为周期
+时间	char	各交易时段成交的电量
+中长期交易成交电量	float	各交易时段电费、日总加电费和月总加电费
+20
+DL/T1008——2006
+（续表）
+类别及名称	数据类型	备	注
+中长期交易结算电费	float	各交易时段成交的电量
+日前交易成交电量	float	各交易时段电费、日总加电费和月总加电费
+日前交易结算电费	float	按不同的线路计算的输电价格和费用
+实时平衡电量	float	包括按交易时段、日、月统计的成交电量，年度总成交电量、以及年度超欠电量
+实时平衡电费	float	以月度为周期
+输电费用	float	各交易时段成交的电量
+辅助服务费用	float	辅助服务费用总加
+考核补偿费用	float	考核补偿费用总加
+A.6 水情信息
+电力市场运营系统从水调自动化系统获得水情信息。
+类别及名称	数据类型	备	注
+水库序号	int
+水库名称	char
+时间	date
+水情预测	float	来水量预测
+水电计划	float
+A.7 与其他电力市场交换信息
+电力市场运营系统与其他电力市场，即与上下级电力市场的数据交换模型。
+类别及名称	数据类型	备	注
+市场名称	char
+交易类型	char	本市场与其他市场进行交易而申报的信息
+交易量	float
+交易价格	float
+时间	date
+21
+DL/T1008——2006
+附	录 B
+（资料性附录）
+交	易	报	价	格	式
+B.1  年交易报价格式模板
+
+< xsd: schema xmlns: xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.pmos.com/yearbid"
+xmlns="http://www.pmos.com/yearbid"
+elementFormDefault=" qualified">
+< xsd:simpleType name="投标价格类“>
+< xsd: annotation>
+< xsd: documentation>
+“投标价格类”定义投标价格的数据类型，浮点数，在0~1000之间。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="机组容量类“>
+< xsd: annotation>
+< xsd: documentation>
+“机组容量类”定义投标文件中与竞价机组容量有关的数据类型，如各段投标容量和可用容量、固定功率等相关数据。浮点数，在缺省单位MW下，机组容量一般在0~1000之间。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="市场成员名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“市场成员名称类”定义参与投标的市场成员名称数据类型，一般为字符串，长度限定在1~40之间。
+22
+DL/T1008——2006
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+< xsd:simpleType name="竞价单元名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元名称类”定义参与投标的竞价单元名称数据类型，一般为字符串，长度限定在1~40之间。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+< xsd:simpleType name="容量单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中与容量有关的数据，需要指明相关的计量单位，缺省为MW.
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MW"/>
+
+
+< xsd:simpleType name="价格单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中的价格单位，只有元/MWh  一种。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="元/MWh"/>
+
+
+23
+DL/T1008--2006
+< xsd:simpleType name="电量单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中与电量有关的数据，需要指明相关的计量单位，缺省为MWh.
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MWh"/>
+
+
+< xsd: element name="年度报价“>
+< xsd: annotation>
+< xsd: documentation>
+“年度报价”节点是年度报价投标文件的根节点，有一个属性“申报年份”，表示竞价年份。
+下级节点为“市场成员”、“竞价单元”、“投标价格”和“投标电量”。报价文件中
+必须具有
+月度报价节点。
+参照申报样例文件“yearbid sample1. xml”和“yearbid sample2. xml”.
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="市场成员" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“市场成员”指参与竞价的发电商（大用户），“编号”属性代表市场成员的唯一编号，必须填写。
+市场成员的类型为前面定义的“市场成员名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="市场成员名称类“>
+< xsd: attribute name="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+24
+DL/T1008——2006
+< xsd: element name="竞价单元“minOccurs=”1”maxOccurs=”1”>
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元”为投标文件对应的竞价单元，可以为独立发电机组，也可以是多台发电机组的组合。
+“编号”属性为竞价单元在市场中的唯一编号，必须填写。
+市场成员的类型为前面定义的“竞价单元名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="竞价单元名称类“>
+< xsd: attribute name="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+< xsd: element name="投标信息" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“投标信息”节点指竞价单元的月度投标信息，包括分段投标容量与
+分段投标价格。“容量单位”、电量单位和“价格单位”
+分别指与容量、电量和价格相关数据的计量单位，取固定值。下级节点为“分段”、“可用容量”、“AGC”、“固定功率”。
+分段至多10段，至少1段。
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="分段" minOccurs="1" maxOccurs="10">
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="电量" minOccurs="1" maxOccurs="10">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="100000"/>
+
+
+
+< xsd: element name="价格" type="投标价格类" minOccurs
+25
+DL/T 1008——2006
+="1"maxOccurs="10"/>
+
+
+
+
+< xsd: attribute name="价格单位" type="价格单位" fixed="元/MWh"/>
+< xsd: attribute name="容量单位" type="容量单位" fixed="MW"/>
+< xsd: attribute name="电量单位" type="电量单位" fixed="MWh"/>
+
+
+
+< xsd: attribute name="申报日期"ttype=" xsd:gYear"/>
+
+
+
+B.2  月交易报价模板
+
+< xsd: schema xmlns: xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.pmos.com/monthbid"
+xmlns="http://www.pmos.com/monthbid"
+elementFormDefault=" qualified">
+< xsd:simpleType name="投标价格类“>
+< xsd: annotation>
+< xsd: documentation>
+“投标价格类”定义投标价格的数据类型，浮点数，在0~1000之间。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="机组容量类“>
+< xsd: annotation>
+< xsd: documentation>
+“机组容量类”定义投标文件中与竞价机组容量有关的数据类型，如各段投标容量和可用容量、固定功率等相关数据。浮点数，在缺省单位MW下，机组容量一般在0~1000之间。
+
+
+26
+DL/T1008——2006
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="非固定出力“>
+< xsd: annotation>
+< xsd: documentation>
+在正常竞价中，机组一般不发固定功率，以N表示，如果确实需要按制定曲线带负荷，可申报固定功率。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="N"/>
+
+
+< xsd:simpleType name="市场成员名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“市场成员名称类”定义参与投标的市场成员名称数据类型，一般为字符串，长度限定在1~40之间。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+< xsd:simpleType name="竞价单元名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元名称类”定义参与投标的竞价单元名称数据类型，一般为字符串，长度限定在1~40之间。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+27
+DL/T1008——2006
+< xsd:simpleType name="容量单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中与容量有关的数据，需要指明相关的计量单位，缺省为MW.
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MW"/>
+
+
+< xsd:simpleType name="价格单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中的价格单位，只有元/MWh 一种。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="元/MWh"/>
+
+
+< xsd:simpleType name="爬坡速率类“>
+< xsd: annotation>
+< xsd: documentation>
+规定机组爬坡参数的数据类型为浮点数，计量单位为MW/min，对于火电机组，  一般不会超过0~100，如果水电机组参与竞价，可将范围适当放宽。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="100"/>
+
+
+< xsd: element name="月度报价“>
+< xsd: annotation>
+< xsd: documentation>
+“月度报价”节点是月度报价投标文件的根节点，有一个属性“申报日期”，包含年和月，表示申报月份。
+下级节点为“市场成员”、“竞价单元”、“投标价格”和“投标容量”。报价文件中必须具有
+28
+DL/T1008——2006
+月度报价节点。
+参照申报样例文件“monthbid sample1. xml”和“monthbid sample2. xml”.
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="市场成员" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“市场成员”指参与竞价的发电商（大用户），“编号”属性代表市场成员的唯一编号，必须填写。
+市场成员的类型为前面定义的“市场成员名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="市场成员名称类“>
+< xsd: attribute name="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+< xsd: element name="竞价单元" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元”为投标文件对应的竞价单元，可以为独立发电机组，也可以是多台发电机组的组合。
+“编号”属性为竞价单元在市场中的唯一编号，必须填写。
+市场成员的类型为前面定义的“竞价单元名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="竞价单元名称类“>
+< xsd: attribute name="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+< xsd: element name="投标信息" minOccurs="1" maxOccurs="1">
+29
+DL/T 1008---2006
+< xsd: annotation>
+< xsd: documentation>
+“投标信息”节点指竞价单元的月度投标信息，包括分段投标容量与
+分段投标价格。“容量单位”和“价格单位”分别指与容量和价格相关数据的计量单位，取固定值。下级节点为“分段”、“可用容量”、“AGC”、“固定功率”。
+分段至多10段，至少1段。
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="分段" minOccurs="1" maxOccurs="10">
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="容量" type="机组容量类" minOccurs="1"maxOccurs="10"/>
+< xsd: element name="价格" type="投标价格类" minOccurs="1"maxOccurs="10"/>
+
+
+
+< xsd: element name="最大功率" type="机组容量类" minOccurs="0"maxOccurs="1"/>
+< xsd: element name="固定功率" minOccurs="0" maxOccurs="1">
+< xsd:simpleType>
+< xsd: union memberTypes="非固定功率	机组容量类“/>
+
+
+< xsd: element name="AGC" minOccurs="0" maxOccurs="1">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="Y"/>
+< xsd: enumeration value="N"/>
+
+
+
+
+< xsd: attribute name="价格单位" type="价格单位" fixed="元/MWh"/>
+< xsd: attribute name="容量单位" type="容量单位" fixed="MW"/>
+
+
+< xsd: element name="技术参数“；minOccurs=”0”maxOccurs=”1”>
+< xsd:complexType>
+30
+DL/T 1008——2006
+< xsd: sequence>
+< xsd: element name="调峰" minOccurs="0" maxOccurs="1">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="Y"/>
+< xsd: enumeration value="N"/>
+
+
+
+< xsd: element name="爬坡参数“：minOccurs=”0” maxOccurs=”1”>
+< xsd:complexType>
+< xsd: sequence>
+< xsd: elementname="速率"minOccurs="1"maxOccurs="5">
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="爬坡速率类“>
+< xsd: attribute name="下限" type="机组
+容量类" use=" required"/>
+< xsd: attribute name="上限" type="机组
+容量类" use=" required"/>
+
+
+
+
+
+< xsd: attribute name="单位" fixed="MW/ min">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MW/ min"/>
+
+
+
+
+
+
+
+
+
+< xsd: attribute name="申报日期" type=" xsd:gYearMonth"/>
+
+
+
+31
+DL/T1008-2006
+B.3  日交易报价模板
+
+< xsd: schema xmlns: xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.pmos.com/rtbid"
+xmlns="http://www.pmos.com/rtbid"
+elementFormDefault=" qualified">
+< xsd:simpleType name="投标价格类“>
+< xsd: annotation>
+< xsd: documentation>
+“投标价格类”定义投标价格的数据类型，浮点数，在0~1000之间。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="机组容量类“>
+< xsd: annotation>
+< xsd: documentation>
+“机组容量类”定义投标文件中与竞价机组容量有关的数据类型，如各段投标容量和可用容量、固定功率等相关数据。浮点数，在缺省单位MW下，机组容量一般在0~1000之间。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="非固定功率“>
+< xsd: annotation>
+< xsd: documentation>
+在正常竞价中，机组一般不发固定功率，以N表示，如果确实需要按制定曲线带负荷，可申报固定功率。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="N"/>
+32
+DL/T1008—2006
+
+
+< xsd:simpleType name="市场成员名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“市场成员名称类”定义参与投标的市场成员名称数据类型，一般为字符串，长度限定在1~40之间。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+< xsd:simpleType name="竞价单元名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元名称类”定义参与投标的竞价单元名称数据类型，一般为字符串，长度限定在1~40之间。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+< xsd:simpleType name="容量单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中与容量有关的数据，需要指明相关的计量单位，缺省为MW.
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MW"/>
+
+
+< xsd:simpleType name ="价格单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中的价格单位，只有元/MWh一种。
+
+33
+DL/T1008——2006
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="元/MWh"/>
+
+
+< xsd:simpleType name ="爬坡速率类“>
+< xsd: annotation>
+< xsd: documentation>
+规定机组爬坡参数的数据类型为浮点数，计量单位为MW/min，对于火电机组，一般不会超过0~100，如果水电机组参与竞价，可将范围适当放宽。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="100"/>
+
+
+< xsd: element name="价格“>
+< xsd: annotation>
+< xsd: documentation>
+定义“价格”节点，投标文件中引用，价格节点具有一个“单位”属性，取固定值“元/MWh”，在投标文件可以出现，也可以省略。申报价格必须为前面定义的“投标价格类”数据。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="投标价格类“>
+< xsd: attribute name="单位" type="价格单位" fixed="元/MWh"/>
+
+
+
+
+< xsd: element name="日前报价“>
+< xsd: annotation>
+< xsd: documentation>
+“日前报价”节点是日前报价投标文件的根节点，有一个属性“申报日期”，日期型数据，表示申报日期。
+下级节点为“市场成员”、“竞价单元”、“投标价格”、“交易时段”和“技术参数”。报价文件中必须具有日前报价节点。
+34
+DL/T 1008——2006
+参照申报样例文件“rtbid sample1. xml”和“rtbid sample2. xml”.
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="市场成员" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“市场成员”指参与竞价的发电商（大用户），“编号”属性代表市场成员的唯一编号，必须填写。
+市场成员的类型为前面定义的“市场成员名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="市场成员名称类“>
+< xsd: attribute name="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+< xsd: element name="竞价单元" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元”为投标文件对应的竞价单元，可以为独立发电机组，也可以是多台发电机组的组合。
+“编号”属性为竞价单元在市场中的唯一编号，必须填写。
+市场成员的类型为前面定义的“竞价单元名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="竞价单元名称类“>
+< xsd: attribute name="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+< xsd: element name="投标价格" minOccurs="0" maxOccurs="1">
+< xsd: annotation>
+35
+DL/T 1008——2006
+< xsd: documentation>
+“投标价格”节点用于每个交易时段，竞价单元容量按多段投标，每
+容量段价格不同的竞价模式。该节点可选，下级节点为各容量分段对应的投标价格，分段数目在0和最大分段之间变化。
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element ref="价格" minOccurs="0" maxOccurs="10"/>
+
+
+
+< xsd: element name="交易时段" minOccurs="1"maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“交易时段”节点指各交易时段的投标容量等信息，交易时段有5、10、15min和30min几种可能。
+至少要求申报一个交易时段的报价数据，每个交易时段的容量至少一段，最大段数一般不超过10.
+同时可以申报“可用容量”、“固定功率”、“AGC”。对于只有一个容量段的交易模式，还可以申报该交易时段的投标价格。“可用容量”、“固定功率”、“AGC”和“投标价格”是否出现由市场规则规定。
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="时段" minOccurs="1" maxOccurs="48">
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="容量" type="机组容量类" minOccurs="1"maxOccurs="10"/>
+< xsd: element name="最	大	功率" type="机	组	容量类“minOccu's=”0”maxOccurs=”1”/>
+< xsd: element name="固定功率“minOccurs=”0”maxOccurs=”1”>
+< xsd:simpleType>
+< xsd: union memberTypes="非固定功率机组容量类“/>
+
+
+< xsd: element name="AGC" minOccurs="0" maxOccurs="1">
+< xsd:simpleType>
+36
+DL/T 1008——2006
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="Y"/>
+< xsd: enumeration value="N"/>
+
+
+
+< xsd: element ref="价格" type="投标价格类" minOccurs="0"
+maxOccurs="1"/>
+
+< xsd: attribute name="时段号" type=" xsd:positiveInteger"/>
+< xsd: attribute name="单位" type="容量单位" fixed="MW"/>
+
+
+
+< xsd: attribute name="时间间隔" fixed="30">
+< xsd:simpleType>
+< xsd: restriction base=" xsd:positiveInteger">
+< xsd: enumeration value="5"/>
+< xsd: enumeration value="10"/>
+< xsd: enumeration value="15"/>
+< xsd: enumeration value="30"/>
+
+
+
+< xsd: attribute name="时间单位" fixed=" min">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="s"/>
+< xsd: enumeration value=" min"/>
+< xsd: enumeration value="h"/>
+
+
+
+
+
+< xsd: element name="技术参数“minOccurs=”0”maxOccurs=”1”>
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="调峰" minOccurs="0" maxOccurs="1">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="Y"/>
+37
+DL/T1008——2006
+< xsd: enumeration value="N"/>
+
+
+
+< xsd: element name="爬坡参数“minOccurs=”0”maxOccurs=”1”>
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="速率"minOccurs="1"maxOccurs="5">
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="爬坡速率类“>
+< xsd: attribute name="下限" type="机组
+容量类" use=" required"/>
+< xsd: attribute name="上限" type="机组
+容量类" use=" required"/>
+
+
+
+
+
+< xsd: attribute name="单位" fixed="MW/ min">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MW/ min"/>
+
+
+
+
+
+
+
+
+
+< xsd: attribute name="申报日期“type=” xsd: date”/>
+
+
+
+B.4  实时交易报价模板
+
+< xsd: schema xmlns: xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.pmos.com/spbid"
+xmlns="http://www.pmos.com/spbid"
+38
+DL/T 1008——2006
+elementFormDefault=" qualified">
+< xsd:simpleType name="投标价格类“>
+< xsd: annotation>
+< xsd: documentation>
+“投标价格类”定义投标价格的数据类型，浮点数，在0~1000之间。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="机组容量类“>
+< xsd: annotation>
+< xsd: documentation>
+“机组容量类”定义投标文件中与竞价机组容量有关的数据类型，如各段投标容量和可用容量、固定功率等相关数据。浮点数，在缺省单位MW下，机组容量一般在0~1000之间。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="1000"/>
+
+
+< xsd:simpleType name="非固定功率“>
+< xsd: annotation>
+< xsd: documentation>
+在正常竞价中，机组一般不发固定功率，以N表示，如果确实需要按制定曲线带负荷，可申报固定出力。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="N"/>
+
+
+< xsd:simpleType name="市场成员名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“市场成员名称类”定义参与投标的市场成员名称数据类型，一般为字符串，长度
+39
+DL/T1008——2006
+限定在1~40之间。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+< xsd:simpleType name="竞价单元名称类“>
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元名称类”定义参与投标的竞价单元名称数据类型，一般为字符串，长度限定在1~40之间。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd:minLength value="1"/>
+< xsd:maxLength value="40"/>
+
+
+< xsd:simpleType name="容量单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中与容量有关的数据，需要指明相关的计量单位，缺省为MW.
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MW"/>
+
+
+< xsd:simpleType name="价格单位“>
+< xsd: annotation>
+< xsd: documentation>
+投标文件中的价格单位，只有元/MWh  一种。
+
+
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="元/MWh"/>
+
+40
+DL/T 1008-2006
+
+< xsd:simpleType name ="爬坡速率类“>
+< xsd: annotation>
+< xsd: documentation>
+规定机组爬坡参数的数据类型为浮点数，计量单位为MW/min，对于火电机组，一般不会超过0~100，如果水电机组参与竞价，可将范围适当放宽。
+
+
+< xsd: restriction base=" xsd: float">
+< xsd:minInclusive value="0"/>
+< xsd:maxInclusive value="100"/>
+
+
+< xsd: element name="价格“>
+< xsd: annotation>
+< xsd: documentation>
+定义“价格”节点，投标文件中引用，价格节点具有一个“单位”属性，取固定值“元/MWh”，在投标文件可以出现，也可以省略。申报价格必须为前面定义的“投标价格类”数据。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="投标价格类“>
+< xsd; attribute name="单位" type="价格单位" fixed="元/MWh"/>
+
+
+
+
+< xsd: element name="实时报价“>
+< xsd: annotation>
+< xsd: documentation>
+“实时报价”节点是实时报价投标文件的根节点，有一个属性“申报日期”，日期型数据，表示申报日期。
+下级节点为“市场成员”、“竞价单元”、“投标价格”、“交易时段”和“技术参数”。报价文件中必须具有实时报价节点。
+参照申报样例文件"spbid samplel. xml"和“spbid sample2. xml”.
+
+
+< xsd:complexType>
+41
+DL/T1008——2006
+< xsd: sequence>
+< xsd: element name="市场成员" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“市场成员”指参与竞价的发电商（大用户），“编号”属性代表市场成员的唯一编号，必须填写。
+市场成员的类型为前面定义的“市场成员名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="市场成员名称类“>
+< xsd: attribute name="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+< xsd: element name="竞价单元" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“竞价单元”为投标文件对应的竞价单元，可以为独立发电机组，也可以是多台发电机组的组合。
+“编号”属性为竞价单元在市场中的唯一编号，必须填写。
+市场成员的类型为前面定义的“竞价单元名称”数据类型。
+
+
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="竞价单元名称类“>
+< xsd: attributename="编号" type=" xsd:positiveInteger" use=" required"/>
+
+
+
+
+< xsd: element name="投标价格" minOccurs="0" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“投标价格”节点用于每个交易时段，竞价单元容量按多段投标，每
+容量段价格不同的竞价模式。该节点可选，下级节点为各容量分段对应的投标价格，分段数目在0和最大分段之间变化。
+
+42
+DL/T1008——2006
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element ref="价格" minOccurs="0" maxOccurs="10"/>
+
+
+
+< xsd: element name="交易时段" minOccurs="1" maxOccurs="1">
+< xsd: annotation>
+< xsd: documentation>
+“交易时段”节点指各交易时段的投标容量等信息，交易时段有5、10、15min和30min几种可能。
+至少要求申报一个交易时段的报价数据，每个交易时段的容量至少一段，最大段数	一般不超过10.
+同时可以申报“可用容量”、“固定功率”、“AGC”。对于只有一个容量段的交易模式，还可以申报该交易时段的投标价格。“可用容量”、“固定功率”、“AGC”和“投标价格”是否出现由市场规则规定。
+
+
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="时段" minOccurs="1" maxOccurs="48">
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="容	量" type="机	组	容	量	类“minOccurs=”1”maxOccurs=”10”/>
+< xsd: element name=" 最大功率" type="机组	容量类"
+minOccurs="0"maxOccurs="1"/>
+< xsd: element name="固定功率"minOccurs="0"maxOccurs="1">
+< xsd:simpleType>
+< xsd: union memberTypes=":非固定功率机组容量类"
+>
+
+
+< xsd: element name="AGC" minOccurs="0" maxOccurs="1">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="Y"/>
+< xsd: enumeration value="N"/>
+
+
+43
+DL/T 1008——2006
+
+< xsd: element ref="价格" type="投标价格类" minOccurs ="0"
+maxOccurs="1"/>
+
+< xsd: attribute name="时段号" type=" xsd:positiveInteger"/>
+< xsd: attribute name="单位" type="容量单位" fixed="MW"/>
+
+
+
+< xsd: attribute name="时间间隔" fixed="30">
+< xsd:simpleType>
+< xsd: restriction base=" xsd:positiveInteger">
+< xsd: enumeration value="5"/>
+< xsd: enumeration value="10"/>
+< xsd: enumeration value="15"/>
+< xsd: enumeration value="30"/>
+
+
+
+< xsd: attribute name="时间单位" fixed=" min">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="s"/>
+< xsd: enumeration value=" min"/>
+< xsd: enumeration value="h"/>
+
+
+
+
+
+< xsd: element name="技术参数" minOccurs="0" maxOccurs="1">
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="调峰" minOccurs="0" maxOccurs="1">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="Y"/>
+< xsd: enumeration value="N"/>
+
+
+
+< xsd: element name="爬坡参数" minOccurs="0" maxOccurs="1">
+44
+DL/T1008——2006
+< xsd:complexType>
+< xsd: sequence>
+< xsd: element name="速率" minOccurs="1" maxOccurs
+="5">
+< xsd:complexType>
+< xsd:simpleContent>
+< xsd: extension base="爬坡速率类“>
+< xsd: attribute name="下限" type="机组容量类" use=" required"/>
+< xsd: attribute name="上限" type="机组
+容量类" use=" required"/>
+
+
+
+
+
+< xsd: attribute name="单位" fixed="MW/ min">
+< xsd:simpleType>
+< xsd: restriction base=" xsd: string">
+< xsd: enumeration value="MW/ min"/>
+
+
+
+
+
+
+
+
+
+< xsd: attribute name="申报日期" type=" xsd: date" />
+
+
+
+45
+DL/T1008——2006
+附	录 C
+（资料性附录）
+符合交易报价格式的文件示例
+C.1  年交易报价
+
+<年度报价xmlns="http://www.pmos.com/yearbid“申报日期=”2003”>
+<市场成员	编号=“100”>第一发电公司
+<竞价单元	编号=“10”>火电厂--号机组
+<投标信息>
+<分段>
+<电量 >10
+<价格>50
+
+
+
+C.2  月交易报价
+
+<月度报价 xmlns="http://www.pmos.com/monthbid“申报日期=”2003-10”>
+<市场成员	编号=“100”>第一发电公司
+<竞价单元	编号=“10”>火电厂一号机组
+<投标信息	容量单位="MW"价格单位=“元/MWh">
+<分段>
+<容量 >10
+<价格>50
+
+
+
+C.3  日交易报价
+
+<日前报价 xmlns="http://www.pmos.com/spbid“申报日期=”2003-10-11”>
+<市场成员	编号=“100”>第一发电公司
+<竞价单元	编号=“10”>火电厂一号机组
+<交易时段>
+<时段	时段号="1">
+<容量 >100
+<价格>290
+
+<时段	时段号="2">
+46
+DL/T 1008-2006
+<容量 >100
+<价格>290
+
+<时段	时段号="3">
+<容量 >100
+<价格>290
+
+<时段	时段号="4">
+<容量 >100
+<价格>290
+
+<时段	时段号="5">
+<容量 >100
+<价格>290
+
+<时段	时段号="6">
+<容量 >100
+<价格>290
+
+<时段	时段号="7">
+<容量 >100
+<价格>290
+
+<时段	时段号="8">
+<容量 >100
+<价格>290
+
+<时段	时段号="9">
+<容量 >100
+<价格>290
+
+<时段	时段号="10">
+<容量 >100
+<价格>290
+
+<时段	时段号="11">
+<容量>100
+<价格>290
+
+<时段	时段号="12">
+<容量 >100
+<价格>290
+
+4
+DL/T 1008——2006
+<时段	时段号="13">
+<容量 >100
+<价格>290
+
+<时段	时段号="14">
+<容量 >100
+<价格>290
+
+<时段	时段号="15">
+<容量 >100
+<价格>290
+
+<时段	时段号="16">
+<容量 >100
+<价格>290
+
+<时段	时段号="17">
+<容量 >100
+<价格>290
+
+<时段	时段号="18">
+<容量 >100
+<价格>290
+
+<时段	时段号="19">
+<容量 >100
+<价格>290
+
+<时段	时段号="20">
+<容量 >100
+<价格>290
+
+<时段	时段号="21">
+<容量 >100
+<价格>290
+
+<时段	时段号="22">
+<容量 >100
+<价格>290
+
+<时段	时段号="23">
+<容量>100
+<价格>290
+48
+DL/T1008——2006
+
+<时段	时段号="24">
+<容量 >100
+<价格>290
+
+<时段	时段号="25">
+<容量 >100
+<价格>290
+
+<时段	时段号="26">
+<容量 >100
+<价格>290
+
+<时段	时段号="27">
+<容量 >100
+<价格>290
+
+<时段	时段号="28">
+<容量 >100
+<价格>290
+
+<时段	时段号="29">
+<容量 >100
+<价格>290
+
+<时段	时段号="30">
+<容量 >100
+<价格>290
+
+<时段	时段号="31">
+<容量 >100
+<价格>290
+
+<时段	时段号="32">
+<容量 >100
+<价格>290
+
+<时段	时段号="33">
+<容量 >100
+<价格>290
+
+<时段	时段号="34">
+<容量 >100
+49
+DL/T1008-2006
+<价格>290
+
+<时段	时段号="35">
+<容量 >100
+<价格>290
+
+<时段	时段号="36">
+<容量 >100
+<价格>290
+
+<时段	时段号="37">
+<容量 >100
+<价格>290
+
+<时段	时段号="38">
+<容量 >100
+<价格>290
+
+<时段	时段号="39">
+<容量 >100
+<价格>290
+
+<时段	时段号="40">
+<容量 >100
+<价格>290
+
+<时段	时段号="41">
+<容量 >100
+<价格>290
+
+<时段	时段号="42">
+<容量 >100
+<价格>290
+
+<时段	时段号="43">
+<容量 >100
+<价格>290
+
+<时段	时段号="44">
+<容量 >100
+<价格>290
+
+<时段	时段号="45">
+50
+DL/T1008-2006
+<容量>100
+<价格>290
+
+<时段	时段号="46">
+<容量 >100
+<价格>290
+
+<时段	时段号="47">
+<容量 >100
+<价格>290
+
+<时段	时段号="48">
+<容量 >100
+<价格>290
+
+
+
+C.4  实时交易报价模板
+
+<实时报价xmlns="http://www.pmos.com/rtbid“申报日期=”2003-10-11”>
+<市场成员	编号=“100”>第一发电公司
+<竞价单元	编号=“10”>火电厂一号机组
+<交易时段>
+<时段	时段号="1">
+<容量 >100
+<价格>290
+
+<时段	时段号="2">
+<容量 >100
+<价格>290
+
+<时段	时段号="3">
+<容量 >100
+<价格>290
+
+<时段	时段号="4">
+<容量 >100
+<价格>290
+
+<时段	时段号="5">
+<容量 >100
+51
+DL/T1008——2006
+<价格>290
+
+<时段	时段号="6">
+<容量 >100
+<价格>290
+
+<时段	时段号="7">
+<容量 >100
+<价格>290
+
+<时段	时段号="8">
+<容量 >100
+<价格>290
+
+<时段	时段号="9">
+<容量 >100
+<价格>290
+
+<时段	时段号="10">
+<容量 >100
+<价格>290
+
+<时段	时段号="11">
+<容量>100
+<价格>290
+
+<时段	时段号="12">
+<容量 >100
+<价格>290
+
+<时段	时段号="13">
+<容量 >100
+<价格>290
+
+<时段	时段号="14">
+<容量 >100
+<价格>290
+
+<时段	时段号="15">
+<容量 >100
+<价格>290
+
+<时段	时段号="16">
+52
+DL/T1008-2006
+<容量 >100
+<价格>290
+
+<时段	时段号="17">
+<容量 >100
+<价格>290
+
+<时段	时段号="18">
+<容量 >100
+<价格>290
+
+<时段	时段号="19">
+<容量 >100
+<价格>290
+
+<时段	时段号="20">
+<容量 >100
+。<价格>290
+
+<时段	时段号="21">
+<容量 >100
+<价格>290
+
+<时段	时段号="22">
+<容量 >100
+<价格>290
+
+<时段	时段号="23">
+<容量 >100
+<价格>290
+
+<时段	时段号="24">
+<容量 >100
+<价格>290
+
+<时段	时段号="25">
+<容量 >100
+<价格>290
+
+<时段	时段号="26">
+<容量 >100
+<价格>290
+
+53
+DL/T1008——2006
+<时段	时段号="27">
+<容量 >100
+<价格>290
+
+<时段	时段号="28">
+<容量>100
+<价格>290
+
+<时段	时段号="29">
+<容量 >100
+<价格>290
+
+<时段	时段号="30">
+<容量 >100
+<价格>290
+
+<时段	时段号="31">
+<容量 >100
+<价格>290
+
+<时段	时段号="32">
+<容量 >100
+<价格>290
+
+<时段	时段号="33">
+<容量 >100
+<价格>290
+
+<时段	时段号="34">
+<容量 >100
+<价格>290
+
+<时段	时段号="35">
+<容量 >100
+<价格>290
+
+<时段	时段号="36">
+<容量 >100
+<价格>290
+
+<时段	时段号="37">
+<容量 >100
+<价格>290
+54
+DL/T1008——2006
+
+<时段	时段号="38">
+<容量 >100
+<价格>290
+
+<时段	时段号="39">
+<容量 >100
+<价格>290
+
+<时段	时段号="40">
+<容量 >100
+<价格>290
+
+<时段	时段号="41">
+<容量 >100
+<价格>290
+
+<时段	时段号="42">
+<容量 >100
+<价格>290
+
+<时段	时段号="43">
+<容量 >100
+<价格>290
+
+<时段	时段号="44">
+<容量 >100
+<价格>290
+
+<时段	时段号="45">
+<容量 >100
+<价格>290
+
+<时段	时段号="46">
+<容量 >100
+<价格>290
+
+<时段	时段号="47">
+<容量 >100
+<价格>290
+
+<时段	时段号="48">
+<容量>100
+55
+DL/T1008-2006
+<价格>290
+
+
+

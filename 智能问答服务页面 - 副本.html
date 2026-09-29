@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能问答服务页面</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-y: hidden;
+        }
+        
+        /* 顶部导航栏 */
+        .top-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c7be5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .menu-logo i {
+            font-size: 24px;
+        }
+        
+        .menu-items {
+            display: flex;
+            gap: 1px;
+        }
+        
+        .menu-item {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .menu-item > a {
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .menu-item > a:hover, .menu-item > a.active {
+            color: #2c7be5;
+            background-color: #f5f9ff;
+        }
+        
+        .submenu {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 180px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 5px 0;
+            list-style: none;
+            margin: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            border-radius: 0 0 4px 4px;
+            z-index: 1000;
+            transform: translateY(10px);
+        }
+        
+        .submenu li {
+            padding: 0;
+        }
+        
+        .submenu li a {
+            text-decoration: none;
+            color: #555;
+            display: block;
+            padding: 12px 20px;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+        
+        .submenu li a:hover {
+            background-color: #f5f9ff;
+            color: #2c7be5;
+        }
+        
+        .menu-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* 移动端菜单按钮 */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            color: #2c7be5;
+            cursor: pointer;
+        }
+        
+        /* 移动端响应式调整 */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .menu-items {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                flex-direction: column;
+                z-index: 1000;
+            }
+            
+            .menu-items.show {
+                display: flex;
+            }
+            
+            .menu-item {
+                width: 100%;
+            }
+            
+            .menu-item > a {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .submenu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                padding-left: 20px;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                transition: max-height 0.3s ease;
+            }
+            
+            .menu-item.open .submenu {
+                max-height: 500px;
+            }
+        }
+        
+        .submenu li a:hover {
+            background-color: #f5f9ff;
+            color: #2c7be5;
+        }
+        
+        .menu-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* 页面主体样式 */
+        .page-container {
+            max-width: 1400px;
+            margin: 15px auto;
+            padding: 0 15px;
+            display: flex;
+            gap: 15px;
+            height: calc(100vh - 90px);
+        }
+        
+        /* 左侧历史记录侧边栏 */
+        .history-sidebar {
+            width: 280px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .history-sidebar.collapsed {
+            width: 70px;
+        }
+        
+        .history-sidebar.collapsed .sidebar-title,
+        .history-sidebar.collapsed .model-card,
+        .history-sidebar.collapsed .history-item,
+        .history-sidebar.collapsed .sidebar-divider {
+            display: none;
+        }
+        
+        .toggle-sidebar-btn {
+            background: none;
+            border: none;
+            color: #2c7be5;
+            font-size: 18px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-sidebar-btn:hover {
+            background-color: rgba(44, 123, 229, 0.1);
+        }
+        
+        .history-sidebar.collapsed .toggle-sidebar-btn {
+            transform: rotate(180deg);
+        }
+        
+        .sidebar-header {
+            padding: 12px 15px;
+            background-color: #f5f9ff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2c7be5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sidebar-title i {
+            font-size: 18px;
+        }
+        
+        .sidebar-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 0;
+        }
+        
+        /* 模型选择区域 - 独立滚动 */
+        .model-scroll-container {
+            max-height: 240px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        
+        .model-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .model-scroll-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .model-scroll-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        
+        .model-list-sidebar {
+            padding: 12px 15px;
+        }
+        
+        .model-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .model-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .model-card:hover, .model-card.active {
+            border-color: #2c7be5;
+            background-color: #f5f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 123, 229, 0.1);
+        }
+        
+        .model-card.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #2c7be5;
+        }
+        
+        .model-name {
+            font-weight: 500;
+            color: #2c7be5;
+            margin-bottom: 3px;
+            font-size: 13px;
+        }
+        
+        .model-name-cn {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .model-desc {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* 历史记录区域 - 独立滚动 */
+        .history-scroll-container {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .history-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .history-scroll-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .history-scroll-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        
+        .history-list {
+            padding: 10px 15px;
+        }
+        
+        .history-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+            border: 1px solid transparent;
+        }
+        
+        .history-item:hover, .history-item.active {
+            background-color: #f5f9ff;
+            border-color: #e0e8fc;
+        }
+        
+        .history-time {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-time i {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: #2c7be5;
+        }
+        
+        .history-item:hover .history-time i {
+            opacity: 1;
+        }
+        
+        .history-question {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* 右侧主内容区 */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+        
+        /* 聊天界面 */
+        .chat-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-grow: 1;
+        }
+        
+        .chat-header {
+            background-color: #2c7be5;
+            color: white;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .chat-title {
+            font-size: 17px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .chat-title i {
+            font-size: 19px;
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .chat-action {
+            color: white;
+            cursor: pointer;
+            font-size: 17px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-action:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 18px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #f9fafc;
+            background-image: 
+                linear-gradient(rgba(240, 245, 255, 0.8) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(240, 245, 255, 0.8) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        
+        .message {
+            display: flex;
+            gap: 10px;
+            max-width: 90%;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.message-ai {
+            align-self: flex-start;
+        }
+        
+        .message.message-user {
+            align-self: flex-end;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .avatar-user {
+            background-color: #e0e7ff;
+            color: #2c7be5;
+            font-size: 17px;
+        }
+        
+        .avatar-ai {
+            background-color: #2c7be5;
+            color: white;
+            font-size: 17px;
+        }
+        
+        .message-content {
+            max-width: calc(100% - 50px);
+            padding: 12px 15px;
+            border-radius: 12px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .content-user {
+            background-color: #2c7be5;
+            color: white;
+            border-radius: 12px 12px 0 12px;
+            box-shadow: 0 2px 8px rgba(44, 123, 229, 0.2);
+        }
+        
+        .content-ai {
+            background-color: white;
+            color: #333;
+            border-radius: 12px 12px 12px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .ai-model-tag {
+            display: inline-block;
+            background-color: #f0f5ff;
+            color: #2c7be5;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 6px;
+        }
+        
+        .chat-input {
+            padding: 12px 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 12px;
+            background-color: white;
+        }
+        
+        .input-box {
+            flex-grow: 1;
+            border: 1px solid #ddd;
+            border-radius: 22px;
+            padding: 10px 15px;
+            font-size: 14px;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            line-height: 1.5;
+        }
+        
+        .input-box:focus {
+            outline: none;
+            border-color: #2c7be5;
+            box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.1);
+        }
+        
+        .send-button {
+            background-color: #2c7be5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 17px;
+            box-shadow: 0 2px 6px rgba(44, 123, 229, 0.2);
+        }
+        
+        .send-button:hover {
+            background-color: #1e63c0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(44, 123, 229, 0.3);
+        }
+        
+        .send-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* 浮动快速问题气泡 */
+        .floating-quick-questions {
+            position: absolute;
+            bottom: 80px;
+            left: 70px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            padding: 12px 15px;
+            z-index: 10;
+            max-width: 320px;
+        }
+        
+        .quick-questions-title {
+            font-size: 15px;
+            color: #222;
+            margin-bottom: 10px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .quick-questions-title i {
+            color: #2c7be5;
+            font-size: 16px;
+        }
+        
+        .quick-question-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .quick-question {
+            background-color: #f0f5ff;
+            color: #2c7be5;
+            border: 1px solid #e0e8fc;
+            border-radius: 18px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        
+        .quick-question:hover {
+            background-color: #e0e8fc;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(44, 123, 229, 0.1);
+        }
+        
+        .quick-question i {
+            font-size: 11px;
+        }
+        
+        .quick-question-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .quick-question-close:hover {
+            color: #666;
+            background-color: #f5f5f5;
+        }
+        
+        .quick-question-toggle {
+            position: absolute;
+            bottom: 120px;
+            left: 20px;
+            background-color: #2c7be5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(44, 123, 229, 0.3);
+            z-index: 15;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-question-toggle:hover {
+            background-color: #1e63c0;
+            transform: scale(1.05);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .page-container {
+                flex-direction: column;
+                height: auto;
+                overflow-y: auto;
+                margin-bottom: 20px;
+            }
+            
+            body {
+                overflow-y: auto;
+            }
+            
+            .history-sidebar {
+                width: 100%;
+                max-height: 320px;
+            }
+            
+            .history-sidebar.collapsed {
+                width: 100%;
+                max-height: 50px;
+            }
+            
+            .model-scroll-container {
+                max-height: 160px;
+            }
+            
+            .floating-quick-questions {
+                max-width: 280px;
+                bottom: 70px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-menu {
+                padding: 0 15px;
+            }
+            
+            .menu-items {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .menu-item > a {
+                padding: 0 12px;
+                font-size: 13px;
+            }
+            
+            .chat-container {
+                height: 500px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .floating-quick-questions {
+                max-width: 250px;
+                left: 15px;
+                padding: 10px 12px;
+            }
+            
+            .quick-question {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .menu-logo span {
+                display: none;
+            }
+            
+            .chat-title span {
+                font-size: 15px;
+            }
+            
+            .message-content {
+                max-width: 80%;
+            }
+            
+            .floating-quick-questions {
+                max-width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-menu">
+        <div class="menu-logo">
+            <i class="fa fa-bolt"></i>
+            <span>电小智</span>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div class="menu-items" id="menuItems">
+            <div class="menu-item">
+                <a href="电力规章制度语料库.html">
+                    语料库管理
+                  
+                </a>
+                <ul class="submenu">
+                    <li><a href="电力规章制度语料库.html">电力规章制度</a></li>
+                    <li><a href="数据集管理页面.html">数据集管理</a></li>
+                    <li><a href="文本清洗页面.html">文本清洗</a></li>
+                </ul>
+            </div>
+            <div class="menu-item">
+                <a href="智能分类标注页面.html">
+                    智能分类标注
+                 
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="知识库管理页面.html">
+                    知识库管理
+                   
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="语言模型训练页面.html">
+                    语言模型训练
+                    
+                </a>
+                <ul class="submenu">
+                    <li><a href="语言模型训练页面.html">模型训练</a></li>
+                    <li><a href="新增模型页面.html">新增模型</a></li>
+                </ul>
+            </div>
+            <div class="menu-item">
+                <a href="知识图谱平台页面.html">
+                    知识图谱平台
+                   
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="智能问答服务页面.html" class="active">
+                    智能问答服务
+                   
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="故障报告生成页面.html">
+                    故障报告生成
+                 
+                </a>
+                <ul class="submenu">
+                    <li><a href="故障报告生成页面.html">故障报告生成</a></li>
+                    <li><a href="数据解析页面.html">数据解析</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const menuItems = document.getElementById('menuItems');
+            menuItems.classList.toggle('show');
+        });
+        
+        // 移动端子菜单切换
+        document.querySelectorAll('.menu-item > a').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const menuItem = this.parentElement;
+                const submenu = menuItem.querySelector('.submenu');
+                
+                if (submenu && window.innerWidth <= 768) {
+                    e.preventDefault();
+                    menuItem.classList.toggle('open');
+                }
+            });
+        });
+        
+        // 窗口大小改变时重置菜单状态
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                document.getElementById('menuItems').classList.remove('show');
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.remove('open');
+                });
+            }
+        });
+    </script>
+    
+    <div class="page-container">
+        <!-- 左侧边栏 - 拆分滚动条 -->
+        <div class="history-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title"><i class="fa fa-cubes"></i>模型选择</h3>
+                <button class="toggle-sidebar-btn" id="toggleSidebar">≡</button>
+            </div>
+            <!-- 模型选择区域 - 独立滚动 -->
+            <div class="model-scroll-container">
+                <div class="model-list-sidebar">
+                    <div class="model-list" id="modelList">
+                    <div class="model-card active" data-model="multi-expert-router">
+                        <div class="model-name">Multi-Expert-Router</div>
+                        <div class="model-name-cn">多专家模型智能路由</div>
+                        <div class="model-desc">根据问题内容自动分析并分配到最合适的专家模型</div>
+                    </div>
+                        <div class="model-card" data-model="dispatching-expert">
+                            <div class="model-name">Dispatching-Expert</div>
+                            <div class="model-name-cn">调度运行专家</div>
+                            <div class="model-desc">解析调度方案、运行规程与实时调度策略</div>
+                        </div>
+                        <div class="model-card" data-model="equipment-expert">
+                            <div class="model-name">Equipment-Expert</div>
+                            <div class="model-name-cn">设备运行专家</div>
+                            <div class="model-desc">聚焦设备维护、运行状态与检修流程</div>
+                        </div>
+                        <div class="model-card" data-model="safety-supervision-expert">
+                            <div class="model-name">SafetySupervision-Expert</div>
+                            <div class="model-name-cn">安全监管专家</div>
+                            <div class="model-desc">聚焦安全管理、隐患排查与监督措施</div>
+                        </div>
+                        <div class="model-card" data-model="marketing-expert">
+                            <div class="model-name">Marketing-Expert</div>
+                            <div class="model-name-cn">营销专家</div>
+                            <div class="model-desc">聚焦电力市场、客户管理、营销政策</div>
+                        </div>
+                        <div class="model-card" data-model="digitalization-expert">
+                            <div class="model-name">Digitalization-Expert</div>
+                            <div class="model-name-cn">数字化专家</div>
+                            <div class="model-desc">解读信息化系统、数字电网技术</div>
+                        </div>
+                        <div class="model-card" data-model="infrastructure-expert">
+                            <div class="model-name">Infrastructure-Expert</div>
+                            <div class="model-name-cn">基建专家</div>
+                            <div class="model-desc">专注基建项目、施工标准及建设规范</div>
+                        </div>
+                        <div class="model-card" data-model="supply-chain-expert">
+                            <div class="model-name">SupplyChain-Expert</div>
+                            <div class="model-name-cn">供应链专家</div>
+                            <div class="model-desc">解析采购、合同、供应链协作条款</div>
+                        </div>
+                        <div class="model-card" data-model="general-expert">
+                            <div class="model-name">General-Expert</div>
+                            <div class="model-name-cn">综合专家</div>
+                            <div class="model-desc">覆盖办公、法律等条款，擅长综合业务</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-divider"></div>
+            
+            <div class="sidebar-header">
+                <h3 class="sidebar-title"><i class="fa fa-history"></i>历史记录</h3>
+            </div>
+            <!-- 历史记录区域 - 独立滚动 -->
+            <div class="history-scroll-container">
+                <div class="history-list" id="historyList">
+                    <div class="history-item active" data-question="变压器的空载损耗主要由什么引起？">
+                        <div class="history-time">
+                            2025-06-07 14:30
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="history-question">变压器的空载损耗主要由什么引起？</div>
+                    </div>
+                    <div class="history-item" data-question="什么是继电保护的四性？">
+                        <div class="history-time">
+                            2025-06-07 10:15
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="history-question">什么是继电保护的"四性"？</div>
+                    </div>
+                    <div class="history-item" data-question="分布式光伏并网有哪些技术要求？">
+                        <div class="history-time">
+                            2025-06-06 16:42
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="history-question">分布式光伏并网有哪些技术要求？</div>
+                    </div>
+                    <div class="history-item" data-question="高压电缆如何选型？">
+                        <div class="history-time">
+                            2025-06-05 09:10
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="history-question">高压电缆如何选型？</div>
+                    </div>
+                    <div class="history-item" data-question="如何提高电力系统稳定性？">
+                        <div class="history-time">
+                            2025-06-04 14:30
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="history-question">如何提高电力系统稳定性？</div>
+                    </div>
+                    <div class="history-item" data-question="变压器常见故障类型有哪些？">
+                        <div class="history-time">
+                            2025-06-03 10:22
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="history-question">变压器常见故障类型有哪些？</div>
+                    </div>
+                    <div class="history-item" data-question="电力系统短路有哪些类型？">
+                        <div class="history-time">
+                            2025-06-02 16:10
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="history-question">电力系统短路有哪些类型？</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧主内容区 -->
+        <div class="main-content">
+            <!-- 聊天界面 -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <i class="fa fa-bolt"></i>
+                        电小智助手 - <span id="current-model">多专家模型智能路由</span>
+                    </div>
+                    <div class="chat-actions">
+                        <div class="chat-action" title="历史记录"><i class="fa fa-history"></i></div>
+                        <div class="chat-action" title="收藏"><i class="fa fa-star-o"></i></div>
+                        <div class="chat-action" title="设置"><i class="fa fa-cog"></i></div>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <!-- 系统欢迎消息 -->
+                    <div class="message message-ai">
+                        <div class="message-avatar avatar-ai">
+                            <i class="fa fa-bolt"></i>
+                        </div>
+                        <div class="message-content content-ai">
+                            <p>您好！我是电小智智能问答助手，已为您选择「多专家模型智能路由」。</p>
+                            <p>您可以询问电力系统相关问题，或点击左下角气泡选择快速问题。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 示例对话 - 用户问题 -->
+                    <div class="message message-user">
+                        <div class="message-content content-user">
+                            <p>变压器的空载损耗主要由什么引起？</p>
+                            <div class="message-time">14:30</div>
+                        </div>
+                        <div class="message-avatar avatar-user">
+                            <i class="fa fa-user"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 示例对话 - 系统回答 -->
+                    <div class="message message-ai">
+                        <div class="message-avatar avatar-ai">
+                            <i class="fa fa-bolt"></i>
+                        </div>
+                        <div class="message-content content-ai">
+                            <p>变压器的空载损耗主要由铁之中的磁滞损耗和涡流损耗引起。</p>
+                            <p>磁滞损耗是由于铁心材料磁化时的磁滞现象产生的，与铁心材料特性和磁通密度有关；涡流损耗是由于铁心内交变磁通感应的涡流产生的电阻损耗，与铁心厚度、电阻率及磁通变化率相关。</p>
+                            <span class="ai-model-tag">设备运行专家模型</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <textarea class="input-box" id="inputBox" placeholder="输入您的问题..."></textarea>
+                    <button class="send-button" id="sendButton">
+                        <i class="fa fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 浮动快速问题气泡 -->
+            <button class="quick-question-toggle" id="quickQuestionToggle">
+                <i class="fa fa-lightbulb-o"></i>
+            </button>
+            <div class="floating-quick-questions" id="quickQuestions">
+                <button class="quick-question-close" id="quickQuestionClose">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="quick-questions-title">
+                    <i class="fa fa-lightbulb-o"></i>快速问题
+                </div>
+                <div class="quick-question-buttons">
+                    <button class="quick-question" data-question="电力系统稳定性分类">
+                        <i class="fa fa-chevron-right"></i>电力系统稳定性分类
+                    </button>
+                    <button class="quick-question" data-question="同步发电机功角特性">
+                        <i class="fa fa-chevron-right"></i>同步发电机功角特性
+                    </button>
+                    <button class="quick-question" data-question="频率调整方法">
+                        <i class="fa fa-chevron-right"></i>频率调整方法
+                    </button>
+                    <button class="quick-question" data-question="高压断路器选型">
+                        <i class="fa fa-chevron-right"></i>高压断路器选型
+                    </button>
+                    <button class="quick-question" data-question="电力系统短路电流">
+                        <i class="fa fa-chevron-right"></i>电力系统短路电流
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 历史记录点击事件
+            const historyItems = document.querySelectorAll('.history-item');
+            const chatMessages = document.getElementById('chatMessages');
+            const inputBox = document.getElementById('inputBox');
+            
+            historyItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有历史记录的活动状态
+                    historyItems.forEach(i => i.classList.remove('active'));
+                    // 添加当前历史记录的活动状态
+                    this.classList.add('active');
+                    // 将问题填入输入框
+                    inputBox.value = this.getAttribute('data-question');
+                    // 滚动到聊天区域
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    // 聚焦输入框
+                    inputBox.focus();
+                });
+            });
+            
+            // 模型选择功能
+            const modelCards = document.querySelectorAll('.model-card');
+            const currentModelEl = document.getElementById('current-model');
+            
+            modelCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 移除所有模型的活动状态
+                    modelCards.forEach(c => c.classList.remove('active'));
+                    // 添加当前模型的活动状态
+                    this.classList.add('active');
+                    // 更新当前模型显示
+                    const modelName = this.querySelector('.model-name-cn').textContent;
+                    currentModelEl.textContent = modelName;
+                    
+                    // 添加模型切换消息
+                    addSystemMessage(`已切换至【${modelName}】模型，您可以开始提问了。`);
+                });
+            });
+
+            // 侧边栏折叠功能
+            document.getElementById('toggleSidebar').addEventListener('click', function() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('collapsed');
+            });
+            
+            // 快速问题气泡显示/隐藏控制
+            const quickQuestionToggle = document.getElementById('quickQuestionToggle');
+            const quickQuestions = document.getElementById('quickQuestions');
+            const quickQuestionClose = document.getElementById('quickQuestionClose');
+            
+            quickQuestionToggle.addEventListener('click', function() {
+                quickQuestions.style.display = quickQuestions.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            quickQuestionClose.addEventListener('click', function() {
+                quickQuestions.style.display = 'none';
+            });
+            
+            // 点击页面其他区域关闭快速问题气泡
+            document.addEventListener('click', function(e) {
+                if (!quickQuestions.contains(e.target) && e.target !== quickQuestionToggle) {
+                    quickQuestions.style.display = 'none';
+                }
+            });
+            
+            // 发送消息功能
+            const sendButton = document.getElementById('sendButton');
+            const inputBoxEl = document.getElementById('inputBox');
+            
+            // 自动调整输入框高度
+            inputBoxEl.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight < 44 ? 44 : this.scrollHeight) + 'px';
+            });
+            
+            sendButton.addEventListener('click', sendMessage);
+            inputBoxEl.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // 预设的专业回答内容
+            const stabilityClassificationResponse = `根据《电力系统安全稳定导则》（DL/T 755-2019）及IEC标准，电力系统稳定性主要分为三类：一是功角稳定性（同步稳定性），聚焦同步发电机转子角度动态特性，分静态功角稳定（小扰动后无需干预恢复同步，判断依据为功角特性曲线斜率，δ＜90°稳定）和暂态功角稳定（大扰动后0.1~2秒内维持同步，摇摆角未超180°则稳定），受发电机惯性、励磁响应等影响；二是电压稳定性，关注扰动后节点电压维持能力，分静态电压稳定（小扰动下靠无功调节维持，超电压稳定极限则失稳）和暂态电压稳定（大扰动后0.5~3秒内避免电压崩溃，需动态无功设备支撑），与无功储备、负荷特性相关；三是频率稳定性，指有功失衡后频率维持在50±0.2Hz（重要用户±0.1Hz）的能力，核心是有功功率平衡，取决于有功备用容量和频率调节能力，失稳会导致机组解列或设备损坏。`;
+
+            const generatorPowerAngleResponse = `同步发电机功角特性是描述发电机输出电磁功率与转子功角（δ）之间关系的特性，是分析功角稳定性的核心依据。功角δ指发电机转子磁极中心线（d轴）与定子合成电动势（E₀）之间的电角度，反映定转子磁场的相对位置。在忽略定子电阻、磁路饱和的简化条件下，隐极式发电机电磁功率公式为P=（E₀U/Xd）sinδ（E₀为发电机空载电动势，U为电网电压，Xd为同步电抗），对应功角特性曲线为正弦曲线；凸极式发电机因交直轴电抗不同（Xq≠Xd），公式为P=（E₀U/Xd）sinδ +（U²/2）（Xd-Xq）/（XdXq）sin2δ，曲线呈非正弦特性。特性曲线的关键节点：δ=0°时P=0（无功率输出）；δ=90°时（隐极机）P达最大值Pmax（功率极限），此时为静态稳定临界点；δ＞90°时，随δ增大P下降，进入静态失稳区域。功角特性受励磁系统（影响E₀）、电网电压（U）、同步电抗（Xd/Xq）影响，励磁增强会提高E₀，使Pmax增大，提升稳定裕度。`;
+
+            const frequencyRegulationResponse = `电力系统频率调整按响应速度和调节目标，分三次调整：一是一次频率调整（主调频），由发电机调速器自动完成，响应时间0.1~2秒。当频率偏差触发调速器动作（如频率下降时开大汽门/水门），增加发电机有功出力，实现"有差调节"（调节后频率仍有微小偏差，偏差值与调速器调差系数相关），主要作用是抑制频率初始波动，维持频率在允许偏差范围；二是二次频率调整（副调频），由自动发电控制（AGC）系统完成，响应时间2~10秒。AGC根据全网频率偏差和联络线功率偏差，向指定机组发送调节指令，调整有功出力，实现"无差调节"（消除一次调整残留的频率偏差），确保频率恢复至额定值（50Hz），是频率稳定的核心调节手段；三是三次频率调整（经济调度），由调度中心根据负荷预测（日/周负荷曲线）制定，提前调整机组启停计划和出力分配，在满足负荷需求的同时，使发电成本最低（如优先调用低成本水电、火电），属于中长期调整，为一次、二次调整提供有功备用基础。`;
+
+            const circuitBreakerSelectionResponse = `高压断路器选型需围绕技术参数和使用场景，核心依据包括：一是额定电压（UN），需与安装节点的电网额定电压匹配，如110kV电网选UN=126kV（考虑电压升高），330kV电网选UN=363kV，确保绝缘性能满足要求；二是额定电流（IN），需大于断路器安装处的最大持续工作电流，如母线处断路器需考虑线路充电电流和负荷电流叠加值，避免长期运行过热；三是额定开断电流（Ik），需大于安装处的三相短路电流周期分量有效值，确保故障时能可靠切断短路电流，防止触头烧损；四是动稳定电流（ich）和热稳定电流（Ith），动稳定电流需大于短路电流冲击值（ich=2.55Ik），抵抗短路电动力作用；热稳定电流需满足t秒（通常1~4秒）内的热效应（Ith²t≥短路电流热效应Qk），避免触头或绝缘件过热损坏；五是操作机构类型，根据使用场景选择，如GIS（气体绝缘开关设备）配套SF6断路器（操作机构多为弹簧或液压式，适用于紧凑布置），户外变电站常用真空断路器（操作机构为弹簧式，维护量小、环境适应性强）；此外还需考虑操作次数、环境条件（如高海拔需加强绝缘）、与保护系统的配合（如分闸时间需满足保护速动性要求）。`;
+
+            const shortCircuitCurrentResponse = `电力系统短路电流是指电网发生短路故障（如三相短路、两相短路、单相接地短路）时，故障点产生的瞬时大电流，是电气设备选型、保护配置的核心依据。短路电流的本质是故障点阻抗急剧减小（近似为零），导致系统向故障点释放大量有功和无功功率，形成大电流。其组成包括：一是周期分量（Ik），由电网等值电源提供，按正弦规律变化，幅值稳定，是短路电流的主要分量，大小取决于系统等值电抗（X*），公式为Ik=UN/（√3X*）（UN为电网额定电压）；二是非周期分量（i非），由电感电流不能突变产生的自由分量，按指数规律衰减，衰减速度与系统等值电阻（R*）和电抗（X*）的比值（R*/X*）相关，电阻越大衰减越快，通常0.05~0.1秒内衰减至零；三是冲击电流（ich），为周期分量幅值与非周期分量最大值的叠加，是短路电流的最大值，公式为ich=2.55Ik（三相短路）或ich=1.73Ik（单相接地短路），用于校验设备动稳定性能。短路电流计算需采用等值电路法（标幺值法），将系统各元件（发电机、变压器、线路）按额定参数归算，得到等值电抗图，再根据故障类型计算故障点电流。影响短路电流的因素包括系统容量（容量越大等值电抗越小，Ik越大）、元件电抗（线路越长、变压器变比越大，电抗越大，Ik越小）、故障类型（三相短路Ik最大，单相接地短路Ik随接地电阻增大而减小）。短路电流的危害包括烧毁设备、产生电动力损坏导体、导致电压骤降影响负荷，需通过断路器切断故障电流，并配置继电保护（如电流速断、过流保护）实现快速跳闸。`;
+            
+            function sendMessage() {
+                const message = inputBoxEl.value.trim();
+                if (message) {
+                    // 添加用户消息
+                    addMessage(message, 'user');
+                    // 清空输入框并重置高度
+                    inputBoxEl.value = '';
+                    inputBoxEl.style.height = '44px';
+                    // 隐藏快速问题气泡
+                    quickQuestions.style.display = 'none';
+                    // 禁用发送按钮
+                    sendButton.disabled = true;
+                    sendButton.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>';
+                    
+                    // 显示系统消息
+                    addSystemMessage('正在从知识库中检索相关信息...');
+                    
+                    // 调用后端API获取回答
+                    fetch('http://localhost:3000/api/chat/ask', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            question: message,
+                            model: currentModelEl.textContent
+                        })
+                    }).then(response => {
+                        return response.json().then(data => ({
+                            status: response.status,
+                            body: data
+                        }));
+                    }).then(result => {
+                        // 恢复发送按钮状态
+                        sendButton.disabled = false;
+                        sendButton.innerHTML = '<i class="fa fa-paper-plane"></i>';
+                        
+                        if (result.status === 200) {
+                            // 添加AI回复
+                            addMessage(result.body.answer, 'ai');
+                            // 添加到历史记录
+                            addToHistory(message);
+                        } else {
+                            // 显示错误消息
+                            addSystemMessage(`获取回答失败: ${result.body.error || '未知错误'}`);
+                        }
+                    }).catch(error => {
+                        console.error('调用后端API失败:', error);
+                        // 恢复发送按钮状态
+                        sendButton.disabled = false;
+                        sendButton.innerHTML = '<i class="fa fa-paper-plane"></i>';
+                        
+                        // 显示错误消息
+                        addSystemMessage(`调用服务失败，请稍后再试: ${error.message}`);
+                        
+                        // 在API调用失败时提供备用回答
+                        setTimeout(() => {
+                            let fallbackResponse = '';
+                            // 根据问题内容匹配专业备用回答
+                            if (message.includes('电力系统稳定性分类') || message.includes('稳定性如何分类')) {
+                                fallbackResponse = stabilityClassificationResponse;
+                            } else if (message.includes('同步发电机功角特性') || message.includes('什么是同步发电机的功角特性')) {
+                                fallbackResponse = generatorPowerAngleResponse;
+                            } else if (message.includes('频率调整方法') || message.includes('频率调整的方法')) {
+                                fallbackResponse = frequencyRegulationResponse;
+                            } else if (message.includes('高压断路器选型') || message.includes('如何选择高压断路器')) {
+                                fallbackResponse = circuitBreakerSelectionResponse;
+                            } else if (message.includes('电力系统短路电流') || message.includes('什么是电力系统的短路电流')) {
+                                fallbackResponse = shortCircuitCurrentResponse;
+                            } else {
+                                fallbackResponse = `关于${message}，这是一个重要的电力系统问题。由于当前服务临时不可用，建议您：
+1. 检查网络连接
+2. 稍后再试
+3. 查阅相关电力系统技术手册`;
+                            }
+                            addMessage(fallbackResponse, 'ai');
+                            addToHistory(message);
+                        }, 500);
+                    });
+                }
+            }
+            
+            // 添加消息到聊天界面
+            function addMessage(content, sender) {
+                const messageEl = document.createElement('div');
+                messageEl.className = `message message-${sender}`;
+                
+                // 格式化内容，将换行符转换为<br>
+                const formattedContent = content.replace(/\n/g, '<br>');
+                
+                if (sender === 'user') {
+                    const time = formatTime();
+                    messageEl.innerHTML = `
+                        <div class="message-content content-user">
+                            <p>${formattedContent}</p>
+                            <div class="message-time">${time}</div>
+                        </div>
+                        <div class="message-avatar avatar-user">
+                            <i class="fa fa-user"></i>
+                        </div>
+                    `;
+                } else {
+                    messageEl.innerHTML = `
+                        <div class="message-avatar avatar-ai">
+                            <i class="fa fa-bolt"></i>
+                        </div>
+                        <div class="message-content content-ai">
+                            <p>${formattedContent}</p>
+                            <span class="ai-model-tag">${currentModelEl.textContent}</span>
+                        </div>
+                    `;
+                }
+                
+                chatMessages.appendChild(messageEl);
+                // 滚动到底部
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // 添加系统消息
+            function addSystemMessage(content) {
+                const messageEl = document.createElement('div');
+                messageEl.className = 'message message-ai';
+                
+                messageEl.innerHTML = `
+                    <div class="message-avatar avatar-ai">
+                        <i class="fa fa-info-circle"></i>
+                    </div>
+                    <div class="message-content content-ai">
+                        <p style="color: #666;">${content}</p>
+                    </div>
+                `;
+                
+                chatMessages.appendChild(messageEl);
+                // 滚动到底部
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // 快速问题点击事件
+            const quickQuestionButtons = document.querySelectorAll('.quick-question');
+            quickQuestionButtons.forEach(question => {
+                question.addEventListener('click', function() {
+                    const questionText = this.getAttribute('data-question');
+                    inputBoxEl.value = questionText;
+                    
+                    // 直接显示预设答案，不调用后端API
+                    addMessage(questionText, 'user');
+                    
+                    // 根据问题内容匹配专业回答
+                    let answer = '';
+                    if (questionText.includes('电力系统稳定性分类')) {
+                        answer = stabilityClassificationResponse;
+                    } else if (questionText.includes('同步发电机功角特性')) {
+                        answer = generatorPowerAngleResponse;
+                    } else if (questionText.includes('频率调整方法')) {
+                        answer = frequencyRegulationResponse;
+                    } else if (questionText.includes('高压断路器选型')) {
+                        answer = circuitBreakerSelectionResponse;
+                    } else if (questionText.includes('电力系统短路电流')) {
+                        answer = shortCircuitCurrentResponse;
+                    }
+                    
+                    if (answer) {
+                        setTimeout(() => {
+                            addMessage(answer, 'ai');
+                            addToHistory(questionText);
+                        }, 300);
+                    }
+                    
+                    // 隐藏快速问题气泡
+                    quickQuestions.style.display = 'none';
+                });
+            });
+            
+            // 添加到历史记录
+            function addToHistory(question) {
+                const historyList = document.getElementById('historyList');
+                const now = new Date();
+                const timeStr = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                // 创建新的历史项
+                const newHistoryItem = document.createElement('div');
+                newHistoryItem.className = 'history-item';
+                newHistoryItem.setAttribute('data-question', question);
+                newHistoryItem.innerHTML = `
+                    <div class="history-time">
+                        ${timeStr}
+                        <i class="fa fa-reply"></i>
+                    </div>
+                    <div class="history-question">${question}</div>
+                `;
+                
+                // 添加点击事件
+                newHistoryItem.addEventListener('click', function() {
+                    historyItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    inputBoxEl.value = this.getAttribute('data-question');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    inputBoxEl.focus();
+                });
+                
+                // 移除所有历史项的active类
+                historyItems.forEach(i => i.classList.remove('active'));
+                // 添加新历史项到顶部
+                historyList.insertBefore(newHistoryItem, historyList.firstChild);
+                // 为新历史项添加active类
+                newHistoryItem.classList.add('active');
+                // 限制历史记录数量为8条
+                if (historyList.children.length > 8) {
+                    historyList.removeChild(historyList.lastChild);
+                }
+            }
+            
+            // 格式化时间
+            function formatTime() {
+                const now = new Date();
+                return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            }
+            
+            // 初始化 - 隐藏快速问题气泡
+            quickQuestions.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
+    
+    /* 响应式设计 */
+    @media (max-width: 992px) {
+        .page-container {
+            flex-direction: column;
+            height: auto;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        body {
+            overflow-y: auto;
+        }
+        
+        .history-sidebar {
+            width: 100%;
+            max-height: 320px;
+        }
+        
+        .history-sidebar.collapsed {
+            width: 100%;
+            max-height: 50px;
+        }
+        
+        .model-scroll-container {
+            max-height: 160px;
+        }
+        
+        .floating-quick-questions {
+            max-width: 280px;
+            bottom: 70px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .top-menu {
+            padding: 0 15px;
+        }
+        
+        .menu-items {
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .menu-item > a {
+            padding: 0 12px;
+            font-size: 13px;
+        }
+        
+        .chat-container {
+            height: 500px;
+        }
+        
+        .message-content {
+            max-width: 85%;
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+        
+        .floating-quick-questions {
+            max-width: 250px;
+            left: 15px;
+            padding: 10px 12px;
+        }
+        
+        .quick-question {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .menu-logo span {
+            display: none;
+        }
+        
+        .chat-title span {
+            font-size: 15px;
+        }
+        
+        .message-content {
+            max-width: 80%;
+        }
+        
+        .floating-quick-questions {
+            max-width: calc(100% - 40px);
+        }
+    }
+    .content-auto {
+        content-visibility: auto;
+    }
+    .menu-active {
+        @apply text-primary border-b-2 border-primary;
+    }
+    .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    }
+    .tag-badge {
+        @apply text-xs px-2 py-1 rounded-full font-medium;
+    }
+    .btn {
+        @apply px-4 py-2 rounded-md font-medium transition-all duration-200;
+    }
+    .btn-primary {
+        @apply bg-primary text-white hover:bg-primary/90;
+    }
+    .btn-outline {
+        @apply border border-neutral-300 hover:border-primary hover:text-primary;
+    }
+</style>
+</head>
+<body class="bg-neutral-100 text-neutral-700">
+  <!-- 顶部导航栏 -->
+  <div class="top-menu">
+    <div class="menu-logo">
+        <i class="fa fa-bolt"></i>
+        <span>电小智</span>
+    </div>
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="menu-items" id="menuItems">
+        <div class="menu-item">
+            <a href="电力规章制度语料库.html">
+                语料库管理
+               
+            </a>
+            <ul class="submenu">
+                <li><a href="电力规章制度语料库.html">电力规章制度</a></li>
+                <li><a href="数据集管理页面.html">数据集管理</a></li>
+                <li><a href="文本清洗页面.html">文本清洗</a></li>
+            </ul>
+        </div>
+        <div class="menu-item">
+            <a href="智能分类标注页面.html">
+                智能分类标注
+                
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="知识库管理页面.html">
+                知识库管理
+               
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="语言模型训练页面.html">
+                语言模型训练
+              
+            </a>
+            <ul class="submenu">
+                <li><a href="语言模型训练页面.html">模型训练</a></li>
+                <li><a href="新增模型页面.html">新增模型</a></li>
+            </ul>
+        </div>
+        <div class="menu-item">
+            <a href="知识图谱平台页面.html">
+                知识图谱平台
+                
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="智能问答服务页面.html" class="active">
+                智能问答服务
+               
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="故障报告生成页面.html">
+                故障报告生成
+                
+            </a>
+            <ul class="submenu">
+                <li><a href="故障报告生成页面.html">故障报告生成</a></li>
+                <li><a href="数据解析页面.html">数据解析</a></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  
+  <script>
+      // 移动端菜单切换
+      document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+          const menuItems = document.getElementById('menuItems');
+          menuItems.classList.toggle('show');
+      });
+      
+      // 移动端子菜单切换
+      document.querySelectorAll('.menu-item > a').forEach(item => {
+          item.addEventListener('click', function(e) {
+              const menuItem = this.parentElement;
+              const submenu = menuItem.querySelector('.submenu');
+              
+              if (submenu && window.innerWidth <= 768) {
+                  e.preventDefault();
+                  menuItem.classList.toggle('open');
+              }
+          });
+      });
+      
+      // 窗口大小改变时重置菜单状态
+      window.addEventListener('resize', function() {
+          if (window.innerWidth > 768) {
+              document.getElementById('menuItems').classList.remove('show');
+              document.querySelectorAll('.menu-item').forEach(item => {
+                  item.classList.remove('open');
+              });
+          }
+      });
+      
+      // 桌面端鼠标悬停显示子菜单
+      document.querySelectorAll('.menu-item').forEach(item => {
+          item.addEventListener('mouseenter', function() {
+              if (window.innerWidth > 768) {
+                  const submenu = this.querySelector('.submenu');
+                  if (submenu) {
+                      submenu.style.opacity = '1';
+                      submenu.style.visibility = 'visible';
+                      submenu.style.transform = 'translateY(0)';
+                  }
+              }
+          });
+          
+          item.addEventListener('mouseleave', function() {
+              if (window.innerWidth > 768) {
+                  const submenu = this.querySelector('.submenu');
+                  if (submenu) {
+                      submenu.style.opacity = '0';
+                      submenu.style.visibility = 'hidden';
+                      submenu.style.transform = 'translateY(10px)';
+                  }
+              }
+          });
+      });
+  </script>
+</body>
+</html>
+    
